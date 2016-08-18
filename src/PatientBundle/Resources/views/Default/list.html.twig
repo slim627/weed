@@ -1,0 +1,53 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title"> Patients</h3>
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li><a ui-sref="dashboard">Home</a><i class="fa fa-circle"></i></li>
+        <li><a href="#">Patients</a></li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT-->
+<div ng-controller="PatientsController as patientsCtrl" class="page-content-container">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN BORDERED TABLE PORTLET-->
+            <div class="portlet light portlet-fit bordered"
+                 kind-cann-table
+                 datasource="patientsService"
+                 {% if is_granted('ROLE_PATIENT_VIEW') %}
+                 row-click-handler="patientsCtrl.openPatient"
+                 {% endif %}
+            >
+                <div class="caption">
+                    <span class="caption-subject font-blue sbold uppercase">
+
+                    </span>
+                </div>
+                <div class="actions" >
+                    <div class="controls">
+                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                            <div class="table-group-actions pull-right">
+                                {% if is_granted('ROLE_PATIENT_CREATE') %}
+                                <button
+                                        class="btn btn-info btn-sm active"
+                                        ng-click="patientsCtrl.addNewPatient()"
+                                        ladda="patientsCtrl.dialogOpenInProgress">
+                                    <i class="fa fa-user"></i> Add new patient</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- END BORDERED TABLE PORTLET-->
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT-->
+{% endblock content %}

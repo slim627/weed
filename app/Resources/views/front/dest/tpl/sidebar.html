@@ -1,0 +1,27 @@
+
+<div class="page-sidebar navbar-collapse collapse">
+  <!-- BEGIN SIDEBAR MENU-->
+  <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders)-->
+  <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode-->
+  <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode-->
+  <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing-->
+  <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded-->
+  <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed-->
+  <ul data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}" class="page-sidebar-menu">
+    <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element-->
+    <li class="start nav-item"><a href="#/dashboard.html"><span class="title">Dashboard</span></a></li>
+    <li class="nav-item"><a ui-sref="page.patients"><span class="title">Patients</span></a></li>
+    <li class="nav-item"><a ui-sref="login"><span class="title">Grow</span></a></li>
+    <li class="nav-item"><a ui-sref="login"><span class="title">Batches</span></a></li>
+    <li class="nav-item"><a ui-sref="login"><span class="title">Best Practices</span></a></li>
+    <li class="nav-item"><a ui-sref="login"><span class="title">Tasks</span></a></li>
+    <li class="nav-item"><a ui-sref="login"><span class="title">Sales Orders</span></a></li>
+    <li class="nav-item"><a ui-sref="login"><span class="title">Purchase Orders</span></a></li>
+    <li class="nav-item"><a ui-sref="login"><span class="title">Inventory</span></a></li>
+    <li class="nav-item"><a ui-sref="login"><span class="title">Reports</span></a></li>
+    <li class="nav-item"><a ui-sref="login"><span class="title">Staff</span></a></li>
+    <li class="nav-item"><a ui-sref="login"><span class="title">Recall Summary</span></a></li>
+    <li class="nav-item"><a ui-sref="login"><span class="title">Strain Care</span></a></li>
+  </ul>
+  <!-- END SIDEBAR MENU-->
+</div>

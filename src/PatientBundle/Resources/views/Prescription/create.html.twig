@@ -1,0 +1,84 @@
+{{ form_start(form, {'attr': {'ng-submit': 'modalCtrl.onSubmit("' ~ path('prescription_submit') ~'")', 'novalidate': 'novalidate'}}) }}
+
+<div class="portlet light bordered" ng-init="modalCtrl.formName='{{ form.vars.name }}'">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-blue uppercase">New prescription</span>
+        </div>
+        <div class="tools">
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="#" class="form-horizontal">
+            <div class="form-body">
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.patient) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.prescriptionStart) }}
+                        {{ form_row(form.prescriptionEnd) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.cycleStartDate) }}
+                        {{ form_row(form.cycleEndDate) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.doctor) }}
+                        {{ form_row(form.monthlyLimit) }}
+
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.dailyLimit) }}
+                        {{ form_row(form.prescriptionStatus) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.note, {'row_type': 'long'}) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+            </div>
+            <div class="form-actions right">
+                <button
+                        type="button"
+                        class="btn default"
+                        ng-click="modalCtrl.closeThisDialog()"
+                >Cancel</button>
+                <button
+                        type="submit"
+                        class="btn blue"
+                        ladda="modalCtrl.inProgress"
+                        ng-disable="{{ form.vars.name }}.$invalid' == true">
+                    <i class="fa fa-check"></i> Save</button>
+            </div>
+        </form>
+        <!-- END FORM-->
+    </div>
+</div>
+
+
+
+{{ form_end(form) }}

@@ -1,0 +1,42 @@
+<!-- BEGIN MAIN CONTENT-->
+<div ng-controller="patientNotesController as notesCtrl" class="page-content-container">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN BORDERED TABLE PORTLET-->
+            <div class="portlet light portlet-fit bordered"
+                 kind-cann-table
+                 datasource="notesService"
+                 {% if is_granted('ROLE_PATIENT_NOTE_AND_TASK_VIEW') %}
+                 row-click-handler="notesCtrl.openNote"
+                 {% endif %}
+            >
+                <div class="caption">
+                    <span class="caption-subject font-blue sbold uppercase">
+                        Notes
+                    </span>
+                </div>
+                <div class="actions" >
+                    <div class="controls">
+                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                            <div class="table-group-actions pull-right">
+                                {% if is_granted('ROLE_PATIENT_NOTE_AND_TASK_PRINT') %}
+                                <button class="btn btn-default btn-sm" ng-click="notesCtrl.print('{{ path('patient_notes_print_data') }}')" ><i class="fa fa-print"></i> Print</button>
+                                {% endif %}
+                                {% if is_granted('ROLE_PATIENT_NOTE_AND_TASK_CREATE') %}
+                                <button
+                                        class="btn btn-info btn-sm active"
+                                        ng-click="notesCtrl.addNote()"
+                                        ladda="notesCtrl.dialogInProgress">
+                                    <i class="fa fa-user"></i> Add new note</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- END BORDERED TABLE PORTLET-->
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT-->

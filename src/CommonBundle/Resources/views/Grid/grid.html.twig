@@ -1,0 +1,50 @@
+<html>
+
+<head>
+   <style type="text/css">
+      table, th, tr ,td {
+         border: 1px solid black;
+         padding: 10px 10px 10px 10px;
+      }
+   </style>
+</head>
+
+<body>
+
+<table>
+
+   <thead>
+   {% set index = [] %}
+   {% for key, head in parameters['head'] %}
+
+      {% if head.type == 'datetime' %}
+         {% set index = index|merge([head.id]) %}
+      {% endif %}
+
+      <th>
+         {{ head.title }}
+      </th>
+
+   {% endfor %}
+   </thead>
+
+   <tbody>
+   {% for row in parameters['rows'] %}
+      <tr>
+         {% for key, param in row %}
+            {% if key in index %}
+               <td> {{ param | date('y-d-m') }} </td>
+            {% else %}
+               <td> {{ param }} </td>
+            {% endif %}
+
+         {% endfor %}
+      </tr>
+   {% endfor %}
+   </tbody>
+
+</table>
+
+</body>
+
+</html>

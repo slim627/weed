@@ -1,0 +1,77 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <!-- BEGIN PAGE HEADER-->
+    <h3 class="page-title">Staff</h3>
+
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a ui-sref="dashboard">Home</a><i class="fa fa-circle"></i></li>
+            <li><a href="#">Staff</a></li>
+        </ul>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN MAIN CONTENT-->
+    <div ng-controller="staffController as staffCtrl" class="page-content-container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- BEGIN BORDERED TABLE PORTLET-->
+                <div class="portlet light portlet-fit bordered"
+                     kind-cann-table
+                     datasource="staffService"
+                     {% if is_granted('ROLE_STAFF_EDIT') %}
+                     row-click-handler="staffCtrl.edit"
+                     {% endif %}
+                     do-update-table="staffCtrl.doUpdateTable"
+                     table-addition-params="staffCtrl.filterCheckbox"
+                >
+                    <div class="caption">
+                        <span class="caption-subject font-blue sbold uppercase">
+
+                        </span>
+                        <div class="table-group-actions">
+                            {% for accessLevel in accessLevels %}
+                            <label>
+                                <checkbox
+                                        ng-model="staffCtrl.filterCheckbox.access_level[{{ accessLevel.id }}]"
+                                        class="btn-checkbox"
+                                        ng-change="staffCtrl.refreshTable()"
+                                        ng-true-value="1"
+                                        ng-false-value="0"
+                                ></checkbox>
+                                {{ accessLevel.name }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="actions" >
+                        <div class="controls">
+                            <div class="btn-group btn-group-devided" data-toggle="buttons">
+
+
+                                <div class="table-group-actions pull-right">
+                                    {% if is_granted('ROLE_STAFF_EDIT_ACCESS_LEVEL') %}
+                                    <button
+                                            class="btn btn-info btn-sm active"
+                                            ui-sref="staff_access_level"
+                                            ladda="staffCtrl.dialogOpenInProgress">
+                                        <i class="fa fa-user"></i> Access level</button>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_STAFF_CREATE') %}
+                                    <button
+                                            class="btn btn-info btn-sm active"
+                                            ng-click="staffCtrl.add()"
+                                            ladda="staffCtrl.dialogOpenInProgress">
+                                        <i class="fa fa-user"></i> Add new</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END BORDERED TABLE PORTLET-->
+            </div>
+        </div>
+    </div>
+    <!-- END MAIN CONTENT-->
+{% endblock content %}

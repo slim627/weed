@@ -1,0 +1,276 @@
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 without-progress">
+            <div class="display">
+                <div class="number">
+                    <h3 class="font-green-sharp">
+                        <span data-counter="counterup">0</span>
+                    </h3>
+                    <small>TOTAL ORDERS</small>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-files-o"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 without-progress">
+            <div class="display">
+                <div class="number">
+                    <h3 class="font-red-haze">
+                        <span data-counter="counterup">0</span>
+                        <small class="font-red-sharp">$</small>
+                    </h3>
+                    <small>TOTAL SPENT</small>
+                </div>
+                <div class="icon">
+                    <i class="icon-wallet"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 without-progress">
+            <div class="display">
+                <div class="number">
+                    <h3 class="font-blue-sharp">
+                        <span data-counter="counterup">0</span>
+                        <small class="font-blue-sharp">g</small>
+                    </h3>
+                    <small>CURRENT CYCLE</small>
+                </div>
+                <div class="icon">
+                    <i class="icon-pie-chart"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 without-progress">
+            <div class="display">
+                <div class="number">
+                    <h3 class="font-purple-soft">
+                        <span data-counter="counterup">0</span>
+                    </h3>
+                    <small>ONLINE VISITS</small>
+                </div>
+                <div class="icon">
+                    <i class="icon-user"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <div class="portlet light no-title-bottom-padding">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <span class="caption-subject font-blue bold uppercase">Contact information</span>
+                </div>
+                <div class="actions">
+                    <div data-toggle="buttons" class="btn-group btn-group-devided">
+                        {% if is_granted('ROLE_PATIENT_EDIT') %}
+                        <button
+                            class="btn default btn-outline"
+                            ladda="patientProfile.openButton_contact"
+                            ng-click="patientProfile.editPatient({activeTab: 'tab_contact', openDialogButton: 'contact'})"
+                            data-spinner-color="#3598dc"><i class="fa fa-edit"></i>&nbsp; Edit</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable table-scrollable-borderless">
+                    <table class="table table-light">
+                        <tbody>
+                        <tr>
+                            <td> Phone: </td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.phone" ></td>
+                        </tr>
+                        <tr>
+                            <td> Mailing address: </td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.mailingAddress"></td>
+                        </tr>
+                        <tr>
+                            <td> Delivery address: </td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.deliveryAddress"> </td>
+                        </tr>
+                        <tr>
+                            <td>Email address:</td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.email"></td>
+                        </tr>
+                        <tr>
+                            <td>Tax exemption:</td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.taxExemption"></td>
+                        </tr>
+                        <tr>
+                            <td>Preferred contact method:</td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.preferredContactMethod"></td>
+                        </tr>
+
+                        </tbody></table>
+                </div>
+            </div>
+        </div>
+        <div class="portlet light no-title-bottom-padding">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <span class="caption-subject font-green bold uppercase">Family doctor</span>
+                </div>
+                <div class="actions">
+                    <div data-toggle="buttons" class="btn-group btn-group-devided">
+                        {% if is_granted('ROLE_PATIENT_EDIT') %}
+                        <button
+                            class="btn default btn-outline"
+                            ladda="patientProfile.openButton_doctor"
+                            ng-click="patientProfile.editPatient({activeTab: 'tab_doctor', openDialogButton: 'doctor'})"
+                            data-spinner-color="#3598dc"><i class="fa fa-edit"></i>&nbsp; Edit</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable table-scrollable-borderless">
+                    <table class="table table-light">
+                        <tbody>
+                        <tr>
+                            <td> Name: </td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.doctor.name"></td>
+                        </tr>
+                        <tr>
+                            <td> License No: </td>
+                            <td class="text-right bold">
+                                {[{patientProfile.dataSource.currentPatient.doctor.license_number}]}
+                                <label class="font-green font-sm" ng-if="patientProfile.dataSource.currentPatient.doctor.license_number_verified">Verified</label>
+                                <label class="font-red font-sm" ng-if="!patientProfile.dataSource.currentPatient.doctor.license_number_verified">Not verified</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> Phone: </td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.doctor.phone"></td>
+                        </tr>
+                        <tr>
+                            <td> Office address: </td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.doctor.office_address"></td>
+                        </tr>
+                        <tr>
+                            <td> Caregiver/Primary centre: </td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.doctor.primary_center"></td>
+                        </tr>
+                        <tr>
+                            <td> Designation date: </td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.doctor.designation_date * 1000 | date"></td>
+                        </tr><tr>
+                            <td> Recommendation: </td>
+                            <td class="text-right bold">
+                                <label ng-if="patientProfile.dataSource.currentPatient.doctor.recommendations_verified" class="font-green font-sm">Verified</label>
+                                <label ng-if="!patientProfile.dataSource.currentPatient.doctor.recommendations_verified" class="font-red font-sm">Not verified</label>
+                            </td>
+                        </tr><tr>
+                            <td> Recommendation notes: </td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.doctor.recommendations_notes"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <div class="portlet light no-title-bottom-padding">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <span class="caption-subject font-red bold uppercase" >Prescription</span>
+                </div>
+                <div class="actions">
+                    <label class="font-green" ng-bind="patientProfile.dataSource.currentPatient.lastPrescription.prescriptionStatus"></label>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable table-scrollable-borderless">
+                    <table class="table table-light">
+                        <tbody>
+                        <tr>
+                            <td> Cycle start date: </td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.lastPrescription.cycleStartDate * 1000 | date"></td>
+                        </tr>
+                        <tr>
+                            <td> Cycle end date: </td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.lastPrescription.cycleEndDate * 1000 | date"></td>
+                        </tr>
+                        <tr>
+                            <td> Thirty-day limit: </td>
+                            <td class="text-right bold">{[{patientProfile.dataSource.currentPatient.lastPrescription.monthlyLimit}]} gramm</td>
+                        </tr>
+                        <tr>
+                            <td>Daily limit:</td>
+                            <td class="text-right bold">{[{patientProfile.dataSource.currentPatient.lastPrescription.monthlyLimit}]} gramm</td>
+                        </tr>
+                        <tr>
+                            <td>Prescription start:</td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.lastPrescription.prescriptionStart * 1000 | date"></td>
+                        </tr>
+                        <tr>
+                            <td>Prescription finish:</td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.lastPrescription.prescriptionFinish * 1000 | date"></td>
+                        </tr>
+                        <tr>
+                            <td>Doctor:</td>
+                            <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.lastPrescription.doctor.name"></td>
+                        </tr>
+
+                        </tbody></table>
+                </div>
+            </div>
+        </div>
+
+        <div class="portlet light no-title-bottom-padding">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <span class="caption-subject font-purple bold uppercase">Upload files</span>
+                </div>
+                <div class="actions">
+                    <div data-toggle="buttons" class="btn-group btn-group-devided">
+                        {% if is_granted('ROLE_PATIENT_EDIT') %}
+                        <button
+                            class="btn btn-primary"
+                            ladda="patientProfile.openButton_files"
+                            ng-click="patientProfile.editPatient({activeTab: 'tab_upload', openDialogButton: 'files'})"
+                        ><i class="icon-cloud-upload"></i>&nbsp; Upload file</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable table-scrollable-borderless">
+                    <table class="table table-light">
+                        <tbody>
+                        <tr ng-repeat="item in patientProfile.dataSource.currentPatient.uploadedFiles track by $index">
+                            <td>
+                                <span class="title font-blue" ng-bind="item.title"></span>,
+                                <span class="description" ng-bind="item.description"></span>&nbsp;
+                                <span class="description" ng-bind="item.size | kcFileSize"></span>
+                            </td>
+                            <td class="text-right"> <button class="btn default btn-xs  btn-outline" ng-click="patientProfile.openFile(item.url)">View</button></td>
+                        </tr>
+                        <tr ng-if="patientProfile.dataSource.currentPatient.files.length == 0">
+                            <td class="text-center">
+                                No files.
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

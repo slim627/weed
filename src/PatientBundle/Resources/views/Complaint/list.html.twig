@@ -1,0 +1,39 @@
+<div class="row" ng-controller="patientComplaintsController as patientComplaintsCtrl">
+    <div class="col-md-12">
+
+        <div class="portlet light portlet-fit bordered"
+             kind-cann-table
+             table-addition-params="patientComplaintsCtrl.additionParams"
+             {% if is_granted('ROLE_COMPLAINT_EDIT') %}
+             row-click-handler="patientComplaintsCtrl.open"
+             {% endif %}
+             datasource="complaintsService"
+        >
+            <div class="caption">
+                <span class="caption-subject font-blue sbold uppercase">
+                    Complaints
+                </span>
+            </div>
+            <div class="actions" >
+                <div class="controls">
+                    <div class="btn-group btn-group-devided" data-toggle="buttons">
+                        <div class="table-group-actions pull-right">
+                            {% if is_granted('ROLE_COMPLAINT_PRINT') %}
+                            <button class="btn btn-default btn-sm" ng-click="patientComplaintsCtrl.print('{{ path('patient_complaints_print_data') }}')" ><i class="fa fa-print"></i> Print</button>
+                            {% endif %}
+                            {% if is_granted('ROLE_COMPLAINT_CREATE') %}
+                            <button
+                                    class="btn btn-info btn-sm active"
+                                    ng-click="patientComplaintsCtrl.addComplaint()"
+                                    ladda="patientComplaintsCtrl.inProgress">
+                                <i class="fa fa-plus"></i> Add new
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

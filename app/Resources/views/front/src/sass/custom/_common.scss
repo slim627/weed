@@ -1,0 +1,146 @@
+.loading{
+  opacity: 0.2;
+  transition: opacity 100ms;
+}
+
+.mb20{
+  margin-bottom: 20px;
+}
+
+.form-group-inline{
+  overflow: hidden;
+  display: inline;
+}
+
+.form-group{
+  color: #A2AAB3;
+  .control-label{
+    font-weight: 100;
+  }
+  .form-control{
+    border: 1px solid #C3C8D7;
+    color: #A2AAB3;
+    font-size: 16px;
+  }
+}
+
+.btn-checkbox{
+  background: #EBEFF5;
+  border: 0;
+}
+
+.nav-tabs{
+  li{
+    a{
+      color: #A2AAB3 !important;
+    }
+    &.active{
+      border-bottom: 4px solid #6C94DD !important;
+
+      a{
+        color: #6C94DD !important;
+      }
+    }
+  }
+}
+
+.table{
+  &.table-without-bottom-border{
+    tbody{
+      tr{
+        td{
+          border-bottom: 0 !important;
+        }
+      }
+    }
+  }
+  &.table-small-td-paddings{
+    tbody{
+      tr{
+        td{
+          padding: 6px;
+        }
+      }
+    }
+  }
+  &.table-light{
+    tbody{
+      tr{
+        border-bottom: 1px solid #F2F5F8;
+        td{
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.portlet {
+  &.no-title-bottom-padding{
+    .portlet-title{
+      margin-bottom: 0 !important;
+    }
+    .portlet-body{
+      padding-top: 0 !important;
+    }
+  }
+}
+
+.portlet-title{
+  .caption{
+    .table-group-actions{
+      label{
+        font-size: 14px;
+        color: #A2AEB7;
+        margin-right: 5px;
+        button{
+          margin-top: -2px;
+        }
+      }
+    }
+  }
+}
+
+
+.portlet-body{
+  table{
+    thead{
+      tr{
+        th{
+          &:first-child{
+            padding-left: 0 !important;
+          }
+          &:last-child{
+            padding-right: 0 !important;
+          }
+        }
+      }
+    }
+    tbody{
+      tr{
+        td{
+          &:first-child{
+            padding-left: 0 !important;
+          }
+          &:last-child{
+            padding-right: 0 !important;
+          }
+        }
+      }
+    }
+    &.table-hover{
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.dashboard-stat2{
+  &.without-progress{
+    padding: 15px;
+    .display{
+      margin-bottom: 0;
+    }
+  }
+}

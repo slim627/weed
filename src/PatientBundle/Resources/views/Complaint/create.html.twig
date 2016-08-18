@@ -1,0 +1,117 @@
+{{ form_start(form, {'attr': {'ng-submit': 'modalCtrl.onSubmit("' ~ path('complaint_submit') ~'")', 'novalidate': 'novalidate'}}) }}
+
+<div class="portlet light bordered" ng-init="modalCtrl.formName='{{ form.vars.name }}'">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-blue uppercase">New Complaint</span>
+        </div>
+        <div class="tools">
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="#" class="form-horizontal">
+            <div class="form-body">
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.patient) }}
+                        {{ form_row(form.sourceOfComplaint) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.productName) }}
+                        {{ form_row(form.lotBatchNumber) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.dueDate) }}
+                        {{ form_row(form.receivedBy) }}
+
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.packageSize) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                <div class="caption form-section">
+                    <span class="caption-subject uppercase">Complaint</span>
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.title) }}
+                        {{ form_row(form.status) }}
+                    </div>
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.dateSampleReceived) }}
+                        {{ form_row(form.priority) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.sampleAvailable) }}
+                        {{ form_row(form.quantityReceived) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.description, {'row_type': 'long'}) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.preferredContactMethod) }}
+                        {{ form_row(form.assignedTo) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.note, {'row_type': 'long'}) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+            </div>
+            <div class="form-actions right">
+                <button
+                    type="button"
+                    class="btn default"
+                    ng-click="modalCtrl.closeThisDialog()"
+                    >Cancel</button>
+                <button
+                    type="submit"
+                    class="btn blue"
+                    ladda="modalCtrl.inProgress"
+                    ng-disable="{{ form.vars.name }}.$invalid' == true">
+                    <i class="fa fa-check"></i> Save</button>
+            </div>
+
+        </form>
+        <!-- END FORM-->
+    </div>
+</div>
+
+{{ form_end(form) }}

@@ -1,0 +1,5 @@
+services:
+    kx.doctor.controller:
+        class: DoctorBundle\Controller\DefaultController
+        calls:
+            - [setContainer, [@service_container]]

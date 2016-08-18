@@ -1,0 +1,134 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <!-- BEGIN PAGE HEADER-->
+    <h3 class="page-title">Access level</h3>
+
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a ui-sref="dashboard">Home</a><i class="fa fa-circle"></i></li>
+            <li><a href="#">Access level</a></li>
+        </ul>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN MAIN CONTENT-->
+    <div class="page-content-container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- BEGIN BORDERED TABLE PORTLET-->
+
+                <div kc-access-levels>
+                    <div class="portlet light portlet-fit bordered" >
+                        <div class="portlet-title" >
+                            <div class="caption ng-scope">
+                            <span class="caption-subject font-blue sbold uppercase">
+
+                            </span>
+                                <div class="table-group-actions">
+                                    <label>
+                                        <select
+                                            name="datatable_ajax_length"
+                                            aria-controls="datatable_ajax"
+                                            class="form-control input-xs input-sm input-inline ng-pristine ng-valid ng-touched"
+                                            ng-options="option.name for option in accessLevelCtrl.accessLevelDropdownOptions track by option.index"
+                                            ng-change="accessLevelCtrl.onAccessLevelDropdownChange()"
+                                            ng-model="accessLevelCtrl.accessLevelDropdownSelected"
+                                        >
+                                            {#<option ng-repeat="option in accessLevelCtrl.accessLevelDropdown" value="{[{ option.name }]}">{[{ option.name }]}</option>#}
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="actions ng-scope">
+                                <div class="controls">
+                                    <div class="btn-group btn-group-devided" data-toggle="buttons">
+
+
+                                        <div class="table-group-actions pull-right">
+                                            <button class="btn btn-info btn-sm active" ui-sref="staff_list"  data-style="slide-left" >
+                                                Back
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="table-scrollable table-scrollable-borderless">
+                                <div ng-if="!accessLevelCtrl.dataSource.accessData">No data for displaying</div>
+                                <span us-spinner="" spinner-on="accessLevelCtrl.dataSource.requestInProgress" class="ng-scope"></span>
+                                <table
+                                    class="table table-light"
+                                    ng-if="accessLevelCtrl.dataSource.accessData"
+                                    ng-class="{'loading': accessLevelCtrl.dataSource.requestInProgress}">
+                                    <thead>
+                                    <tr class="uppercase">
+                                        <th colspan="{[{ accessLevelCtrl.maxDataGridColumns }]}">
+                                            <span>CRM Area</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="row in accessLevelCtrl.gridData">
+                                        <td ng-bind="row.accessRoleName"></td>
+                                        <td class="bold" ng-repeat="item in row.accessRoleData" ng-if="!$last">
+                                            <label>
+                                                <checkbox
+                                                        ng-model="item.isGranted"
+                                                        class="btn-checkbox"
+                                                        {#ng-change="staffCtrl.refreshTable()"#}
+                                                        {#ng-true-value="1"#}
+                                                        {#ng-false-value="0"#}
+                                                ></checkbox>
+                                                {[{item.roleTitle}]}
+                                            </label>
+                                        </td>
+                                        <td
+                                            class="bold"
+                                            ng-repeat="item in row.accessRoleData"
+                                            ng-if="$last"
+                                            colspan="{[{accessLevelCtrl.maxDataGridColumns - $index}]}">
+                                            <label>
+                                                <checkbox
+                                                        ng-model="item.isGranted"
+                                                        class="btn-checkbox"
+                                                        {#ng-change="staffCtrl.refreshTable()"#}
+                                                        {#ng-true-value="1"#}
+                                                        {#ng-false-value="0"#}
+                                                ></checkbox>
+                                                {[{item.roleTitle}]}
+                                            </label>
+                                        </td>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="actions">
+                                        <div class="controls text-right">
+                                            <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                                <div class="table-group-actions pull-right">
+                                                    <button
+                                                        class="btn btn-info btn-md active"
+                                                        ladda="accessLevelCtrl.dataSource.savingAccessLevelRequestInProgress"
+                                                        ng-click="accessLevelCtrl.saveAccessLevel()">
+                                                        <i class="fa fa-check"></i>
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- END BORDERED TABLE PORTLET-->
+            </div>
+        </div>
+    </div>
+    <!-- END MAIN CONTENT-->
+{% endblock content %}

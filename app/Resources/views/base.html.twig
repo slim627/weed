@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<!--if IE 8html.ie8.no-js(lang='en', data-ng-app='KindCannApp')
+-->
+<!--if IE 9html.ie9.no-js(lang='en', data-ng-app='KindCannApp')
+-->
+<!-- [if !IE] <!-->
+<html lang="en" data-ng-app="KindCannApp">
+<!-- <![endif]-->
+<!-- BEGIN HEAD-->
+<head>
+    <title data-ng-bind="'KC | ' + $state.current.data.pageTitle"></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+
+    <base href="/">
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES-->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css">
+    <link href="/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/global/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
+    <link href="/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/vendors/ng-dialog/css/ngDialog.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/vendors/ng-dialog/css/ngDialog-theme-default.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/assets/vendors/ladda/dist/ladda-themeless.min.css">
+    <link rel="stylesheet" href="/assets/vendors/AngularJS-Toaster/toaster.min.css">
+    <link href="/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="/assets/custom/custom.css">
+    <!-- END GLOBAL MANDATORY STYLES-->
+    <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files )-->
+    <link id="ng_load_plugins_before">
+    <!-- END DYMANICLY LOADED CSS FILES-->
+    <!-- BEGIN THEME STYLES-->
+    <!-- DOC: To use 'rounded corners' style just load 'modules-rounded.css' stylesheet instead of 'modules.css' in the below style tag-->
+    <link id="style_components" href="/assets/global/css/components.css" rel="stylesheet" type="text/css">
+    <link href="/assets/global/css/plugins.css" rel="stylesheet" type="text/css">
+    <link href="/assets/layouts/layout/css/layout.css" rel="stylesheet" type="text/css">
+    <link id="style_color" href="/assets/layouts/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css">
+    <link href="/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css">
+    <!-- END THEME STYLES-->
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+    <script src="/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="/assets/global/plugins/angularjs/angular.js" type="text/javascript"></script>
+    <script>
+
+
+        /***
+         KindCannApp AngularJS App Main Script
+         ***/
+
+        /* KindCannAppc App */
+        var KindCannApp = angular.module("KindCannApp", [
+            "ui.router",
+            "ui.bootstrap",
+            "oc.lazyLoad",
+            "ngSanitize",
+            'toaster',
+            'KindCannApp.services',
+            'KindCannApp.controllers',
+            'KindCannApp.directives',
+            'KindCannApp.filters',
+            'angular-ladda',
+            'angularSpinner',
+            'ngDialog',
+            'KindCannApp.components',
+            'ui.checkbox',
+            'angular-cache'
+        ]);
+
+        /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
+        KindCannApp.config(['$ocLazyLoadProvider', function ($ocLazyLoadProvider) {
+            $ocLazyLoadProvider.config({
+                // global configs go here
+            });
+        }]);
+
+        //AngularJS v1.3.x workaround for old style controller declarition in HTML
+        KindCannApp.config(['$controllerProvider', function ($controllerProvider) {
+            // this option might be handy for migrating old apps, but please don't use it
+            // in new ones!
+            $controllerProvider.allowGlobals();
+        }]);
+
+
+        /* Setup global settings */
+        KindCannApp.factory('settings', ['$rootScope', function ($rootScope) {
+            // supported languages
+            var settings = {
+                layout: {
+                    pageSidebarClosed: false, // sidebar menu state
+                    pageContentWhite: false, // set page content layout
+                    pageBodySolid: false, // solid body color state
+                    pageAutoScrollOnLoad: 200 // auto scroll to top on page load
+                },
+                assetsPath: '/assets',
+                globalPath: '/assets/global',
+                layoutPath: '/assets/layouts/layout',
+            };
+
+            $rootScope.settings = settings;
+
+            return settings;
+        }]);
+
+        /* Setup App Main Controller */
+        KindCannApp.controller('AppController', ['$scope', '$rootScope', '$state', function ($scope, $rootScope, $state) {
+
+            // initialize core modules
+//            App.initAjax();
+            $scope.$on('$viewContentLoaded', function() {
+
+                $rootScope.settings.layout.pageContentWhite = true;
+                $rootScope.settings.layout.pageBodySolid = false;
+                $rootScope.settings.layout.pageSidebarClosed = false;
+            });
+        }]);
+
+        /**
+         * Service for storing data and others route names
+         *     - patient_list_data: Data for patients list
+         *     - logout: logout route
+         *
+         */
+        KindCannApp.constant('routeService', {
+            'patient_verify':                   '{{ path("patient.verify") }}',
+            'patient_create':                   '{{ path("patient_create") }}',
+            'patient_edit':                     '{{ path("patient_edit") }}',
+            'patient_submit':                   '{{ path("patient_submit") }}',
+            'patient_remove_file':              '{{ path("patient.remove_file") }}',
+            'patient_list_data':                '{{ path("patient_list_data") }}',
+            'patient_show_data':                '{{ path('patient_show_data') }}',
+            'patient_notes_list_data':          '{{ path('patient_notes_list_data') }}',
+            'patient_note_show':                '{{ path('patient_note_show') }}',
+            'patient_note_create':              '{{ path('note_create') }}',
+            'patient_note_submit':              '{{ path('note_submit') }}',
+            'patient_note_edit':                '{{ path('note_edit') }}',
+            'patient_complaints_list_data':     '{{ path('patient_complaints_list_data') }}',
+            'patient_complaint_show':           '{{ path('patient_complaint_show') }}',
+            'patient_complaint_tasks_show_data':'{{ path('patient_complaint_tasks_show_data') }}',
+            'patient_complaint_create':         '{{ path('complaint_create') }}',
+            'patient_complaint_submit':         '{{ path('complaint_submit') }}',
+            'patient_complaint_edit':           '{{ path('complaint_edit') }}',
+            'patient_histories_list_data':      '{{ path('patient_histories_list_data') }}',
+            'patient_prescriptions_list_data':  '{{ path('patient_prescriptions_list_data') }}',
+            'patient_prescriptions_create':     '{{ path('prescription_create') }}',
+            'patient_prescriptions_edit':       '{{ path('prescription_edit') }}',
+            'patient_prescriptions_show':       '{{ path('prescription_edit') }}',
+            'patient_prescriptions_submit':     '{{ path('prescription_submit') }}',
+            'doctor_list_data':                 '{{ path('doctor.list_data') }}',
+            'doctor_create':                    '{{ path('doctor.create') }}',
+            'doctor_edit':                      '{{ path('doctor.edit') }}',
+            'doctor_submit':                    '{{ path('doctor.submit') }}',
+            'notification_list_data':           '{{ path('notification.list_data') }}',
+            'staff_list_data':                  '{{ path('staff.list_data') }}',
+            'staff_create':                     '{{ path('staff.create') }}',
+            'staff_edit':                       '{{ path('staff.edit') }}',
+            'staff_submit':                     '{{ path('staff.submit') }}',
+            'staff_access_level_data':          '{{ path('staff.access_level_data') }}',
+            'staff_submit_access_level_data':   '{{ path('staff.submit_access_level_data') }}',
+            'logout':                           '{{ path("fos_user_security_logout") }}',
+            'base_file_storage_url':            '{{ base_storage_url }}',
+
+        });
+
+        KindCannApp.factory('errorChecker', ['$q', '$injector', function ($q, $injector) {
+            var errorChecker = {
+                responseError: function (response) {
+
+                    var autorization = $injector.get('authorizationService');
+                    var toast = $injector.get('toaster');
+
+                    switch (parseInt(response.status)){
+                        case 400:
+                            showToast(response.data.response.error_message);
+                            break;
+
+                        case 401:
+                            autorization.goToLogin();
+                            break;
+                        
+                        case 403:
+                            if(response.data != 'undefined'){
+                                showToast(response.data.response.error_message);
+                            }
+                            autorization.logout();
+                            break;
+
+                        case 404:
+                            showToast(response.data);
+                            break;
+
+                        case 500:
+                            showToast('Internal server error');
+                            break;
+
+                        case -1:
+                            // Ignore aborting status
+                            break;
+
+                        default:
+                            showToast("Unknown error");
+                    }
+
+                    function showToast(bodyText){
+                        toast.pop({
+                            type: 'error',
+                            title: response.status + ' - ' + response.statusText,
+                            body: bodyText,
+                            showCloseButton: true,
+                            bodyOutputType: 'trustedHtml'
+                        });
+                    }
+
+                    return $q.reject(response);
+                }
+            };
+            return errorChecker;
+        }]);
+
+        /* Setup Rounting For All Pages */
+        KindCannApp.config([
+            '$stateProvider',
+            '$urlRouterProvider',
+            'laddaProvider',
+            '$httpProvider',
+            '$locationProvider',
+            '$interpolateProvider',
+            'usSpinnerConfigProvider',
+            function (
+                    $stateProvider,
+                    $urlRouterProvider,
+                    laddaProvider,
+                    $httpProvider,
+                    $locationProvider,
+                    $interpolateProvider,
+                    usSpinnerConfigProvider) {
+
+                usSpinnerConfigProvider.setDefaults({
+                    color: '#364150',
+                    lines: 13,
+                    length: 5,
+                    width: 5,
+                    radius: 17,
+                    scale: 1,
+                    corners: 1
+                });
+
+                $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+
+                $httpProvider.interceptors.push('errorChecker');
+                $httpProvider.defaults.headers.post['Content-Type'] = 'application/json';
+                $httpProvider.defaults.headers.common = {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    "AngularJS": 1
+                };
+
+                laddaProvider.setOption({
+                    style: 'slide-left'
+                });
+                // Redirect any unmatched url
+                $urlRouterProvider.otherwise("{{ path('dashboard') }}");
+
+                $stateProvider
+
+                // Login
+                        .state('login', {
+                            cache: false,
+                            url: '{{ path("fos_user_security_login") }}',
+                            views: {
+                                'base-view':{
+                                    templateUrl: "{{ path('fos_user_security_login') }}"
+                                }
+                            },
+                            data: {pageTitle: 'Login page'},
+                            resolve: {
+                                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'KindCannApp',
+                                        insertBefore: '#ng_load_plugins_before',
+                                        files: [
+                                            '/assets/pages/css/login.css',
+                                            '/assets/global/plugins/jquery-validation/js/jquery.validate.min.js',
+                                            '/assets/global/plugins/jquery-validation/js/additional-methods.min.js',
+                                            '/assets/global/plugins/select2/js/select2.full.min.js'
+                                        ]
+                                    });
+                                }]
+                            }
+                        })
+
+                        // Dashboard
+                        .state('dashboard', {
+                            url: "{{ path('dashboard') }}",
+                            views: {
+                                'base-view': {
+                                    templateUrl: "{{ path('dashboard') }}"
+                                }
+                            },
+                            data: {pageTitle: 'Admin Dashboard Template'},
+                            resolve: {
+                                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'KindCannApp',
+                                        insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+                                        files: [
+                                            '/assets/global/plugins/morris/morris.min.js',
+                                            '/assets/global/plugins/morris/raphael-min.js',
+                                            '/assets/global/plugins/jquery.sparkline.min.js',
+
+                                            '/assets/pages/scripts/dashboard.js'
+                                        ]
+                                    });
+                                }]
+                            }
+                        })
+
+                        // Patients
+                        .state('patient_list', {
+                            url: '{{ path('patient_list') }}',
+                            views: {
+                                'base-view': {
+                                    templateUrl: '{{ path('patient_list') }}'
+                                }
+                            },
+                            data: {pageTitle: 'Patients'}
+                        })
+
+                        // User Profile
+                        .state("patient", {
+                            url: "{{ path('patient.show', {id: ':id'}) }}",
+                            views: {
+                                'base-view': {
+                                    templateUrl: function ($stateParams) {
+                                        var url = "{{ path('patient.show', {id: '-1'}) }}";
+                                        return url.replace('-1', $stateParams.id);
+                                    }
+                                }
+                            },
+                            data: {pageTitle: 'User Profile'},
+                            controller: "patientProfileController",
+                            resolve: {
+                                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'KindCannApp',
+                                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                                        files: [
+                                            '/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css',
+                                            '/assets/pages/css/profile.css',
+
+                                            '/assets/global/plugins/jquery.sparkline.min.js',
+                                            '/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js',
+
+                                            '/assets/pages/scripts/profile.js',
+                                        ]
+                                    });
+                                }]
+                            }
+                        })
+
+                        // Patient notes and tasks
+                        .state("patient.notes", {
+                            url: "/notes",
+                            views: {
+                                'profile-view': {
+                                    templateUrl: function ($stateParams) {
+                                        var url = "{{ path('patient_notes_list', {id: '-1'}) }}";
+                                        return url.replace('-1', $stateParams.id);
+                                    }
+                                }
+                            },
+                            data: {pageTitle: 'Patient notes'}
+                        })
+
+                        .state("patient.overview", {
+                            url: "/overview",
+                            views: {
+                                'profile-view': {
+                                    templateUrl: function ($stateParams) {
+                                        var url = "{{ path('patient.overview', {id: '-1'}) }}";
+                                        return url.replace('-1', $stateParams.id);
+                                    }
+                                }
+                            },
+                            data: {pageTitle: 'Patient overview'}
+                        })
+
+                        .state("patient.history", {
+                            url: "/history",
+                            views: {
+                                'profile-view': {
+                                    templateUrl: function ($stateParams) {
+                                        var url = "{{ path('patient_histories_list', {id: '-1'}) }}";
+                                        return url.replace('-1', $stateParams.id);
+                                    }
+                                }
+                            },
+                            data: {pageTitle: 'Patient overview'}
+                        })
+
+                        .state("patient.prescriptions", {
+                            url: "/prescriptions",
+                            views: {
+                                'profile-view': {
+                                    templateUrl: function ($stateParams) {
+                                        var url = "{{ path('patient_prescriptions_list', {id: '-1'}) }}";
+                                        return url.replace('-1', $stateParams.id);
+                                    }
+                                }
+                            },
+                            data: {pageTitle: 'Patient overview'}
+                        })
+
+                        // User Profile Account
+                        .state("patient.complaints", {
+                            url: '/list-complaints',
+                            views: {
+                                'profile-view': {
+                                    templateUrl: function ($stateParams) {
+                                        var url = "{{ path('patient_complaints_list', {id: '-1'}) }}";
+                                        return url.replace('-1', $stateParams.id);
+                                    }
+                                }
+                            },
+                            data: {pageTitle: 'Patient complaints'},
+                            resolve: {
+                                deps: ['$ocLazyLoad', function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'KindCannApp',
+                                        insertBefore: '#ng_load_plugins_before'
+                                    });
+                                }]
+                            }
+                        })
+
+
+                        // Doctors
+                        .state('doctors_list', {
+                            url: '{{ path('doctor.list') }}',
+                            views: {
+                                'base-view': {
+                                    templateUrl: '{{ path('doctor.list') }}'
+                                }
+                            },
+                            data: {pageTitle: 'Doctors'}
+
+                        })
+
+                        // Staff
+                        .state('staff_list', {
+                            url: '{{ path('staff.list') }}',
+                            views: {
+                                'base-view': {
+                                    templateUrl: '{{ path('staff.list') }}'
+                                }
+                            },
+                            data: {pageTitle: 'Staff'}
+
+                        })
+
+                        // Staff Access level page
+                        .state('staff_access_level', {
+                            url: '{{ path('staff.edit_access_level') }}',
+                            views: {
+                                'base-view': {
+                                    templateUrl: '{{ path('staff.edit_access_level') }}'
+                                }
+                            },
+                            data: {pageTitle: 'Staff Access Level'}
+                        })
+                ;
+//            $locationProvider.html5Mode(true);
+            }]);
+
+        /* Init global settings and run the app */
+        KindCannApp.run(["$rootScope", "settings", "$state", '$cacheFactory', '$log', function ($rootScope, settings, $state, $cacheFactory, $log) {
+            $rootScope.$state = $state; // state to be accessed from view
+            $rootScope.$settings = settings; // state to be accessed from view
+
+            $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
+                $log.info('State changing: ', toState);
+
+                // If the state we are headed to has cached template views
+                if (toState.url == '{{ path("fos_user_security_login") }}') {
+                    // Loop through each view in the cached state
+                    for (var key in toState.views) {
+                        // Delete templeate from cache
+                        $log.info("Delete cached template: " + toState.views[key].templateUrl);
+                        $cacheFactory.get('templates').remove(toState.views[key].templateUrl);
+                    }
+                }
+            });
+        }]);
+
+    </script>
+
+</head>
+<!-- END HEAD-->
+<!-- BEGIN BODY-->
+<body >
+<toaster-container toaster-options="{'close-button': true}"></toaster-container>
+<!-- BEGIN ACTUAL CONTENT-->
+<div ui-view="" name="base-view"></div>
+<!-- END ACTUAL CONTENT-->
+
+
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time)-->
+<!-- BEGIN CORE JQUERY PLUGINS-->
+<!--if lt IE 9
+script(src='/assets/global/plugins/respond.min.js')
+script(src='/assets/global/plugins/excanvas.min.js')
+-->
+
+<script src="/assets/vendors/lodash/dist/lodash.min.js" type="text/javascript"></script>
+
+<script src="/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+
+<script src="/assets/global/plugins/moment.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+
+
+
+<!-- END CORE JQUERY PLUGINS-->
+<!-- BEGIN CORE ANGULARJS PLUGINS-->
+
+<script src="/assets/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
+<script src="/assets/vendors/angular-animate/angular-animate.min.js" type="text/javascript"></script>
+{#<script src="/assets/vendors/ng-file-upload/ng-file-upload.min.js" type="text/javascript"></script>#}
+<script src="/assets/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
+<script src="/assets/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+<!-- END CORE ANGULARJS PLUGINS-->
+<!-- BEGIN APP LEVEL ANGULARJS SCRIPTS-->
+<script src='/js/controllers/dashboard.controller.js' type='text/javascript'> </script>
+<script src='/js/controllers/login.controller.js' type='text/javascript'> </script>
+<script src="/js/services/authorization.service.js" type="text/javascript"></script>
+<script src="/js/services/history.service.js" type="text/javascript"></script>
+<script src="/js/services/prescriptions.service.js" type="text/javascript"></script>
+<script src="/js/services/common.service.js" type="text/javascript"></script>
+<script src="/js/services.js" type="text/javascript"></script>
+<script src="/js/controllers/patient.history.controller.js" type="text/javascript"></script>
+<script src="/js/controllers/patient.dialog.controller.js" type="text/javascript"></script>
+<script src="/js/controllers/patient.prescriptions.controller.js" type="text/javascript"></script>
+<script src="/js/controllers/patient.prescriptions.modal.controller.js" type="text/javascript"></script>
+<script src="/js/controllers.js" type="text/javascript"></script>
+<script src="/js/directives.js" type="text/javascript"></script>
+<script src="/js/filters.js" type="text/javascript"></script>
+
+<!-- BEGIN COMPONENTS ANGULARJS SCRIPTS -->
+<script src="/components/patient/notes/notes.modal.controller.js" type="text/javascript"></script>
+<script src="/components/patient/notes/notes.controller.js" type="text/javascript"></script>
+<script src="/components/patient/notes/notes.service.js" type="text/javascript"></script>
+<script src="/components/patient/notes/notes.component.js" type="text/javascript"></script>
+
+<script src="/components/patient/complaints/complaints.modal.controller.js" type="text/javascript"></script>
+<script src="/components/patient/complaints/complaints.controller.js" type="text/javascript"></script>
+<script src="/components/patient/complaints/complaints.service.js" type="text/javascript"></script>
+<script src="/components/patient/complaints/complaints.component.js" type="text/javascript"></script>
+
+<script src="/components/patient/profile/profile.modal.controller.js" type="text/javascript"></script>
+<script src="/components/patient/profile/profile.controller.js" type="text/javascript"></script>
+<script src="/components/patient/profile/profile.component.js" type="text/javascript"></script>
+
+<script src="/components/patient/patients.service.js" type="text/javascript"></script>
+<script src="/components/patient/patients-list.controller.js" type="text/javascript"></script>
+<script src="/components/patient/patient.component.js" type="text/javascript"></script>
+
+<script src="/components/footer/footer.directive.js" type="text/javascript"></script>
+
+<script src="/components/sidebar/sidebar.directive.js" type="text/javascript"></script>
+
+<script src="/components/doctors/doctors.modal.controller.js" type="text/javascript"></script>
+<script src="/components/doctors/doctors.directive.js" type="text/javascript"></script>
+<script src="/components/doctors/doctors.service.js" type="text/javascript"></script>
+<script src="/components/doctors/doctors.component.js" type="text/javascript"></script>
+
+<script src="/components/staff/access-level/access-level.service.js" type="text/javascript"></script>
+<script src="/components/staff/access-level/access-level.directive.js" type="text/javascript"></script>
+<script src="/components/staff/access-level/access-level.component.js" type="text/javascript"></script>
+
+<script src="/components/staff/staff.service.js" type="text/javascript"></script>
+<script src="/components/staff/staff.modal.controller.js" type="text/javascript"></script>
+<script src="/components/staff/staff.controller.js" type="text/javascript"></script>
+<script src="/components/staff/staff.module.js" type="text/javascript"></script>
+
+<script src="/components/header/head.controller.js" type="text/javascript"></script>
+<script src="/components/header/header.service.js" type="text/javascript"></script>
+<script src="/components/header/header.directive.js" type="text/javascript"></script>
+<script src="/components/header/header.module.js" type="text/javascript"></script>
+
+<script src="/components/common/datetime-picker/datetime-picker.js" type="text/javascript"></script>
+
+<script src="/components/common/custom-table/kc-table-core.directive.js" type="text/javascript"></script>
+<script src="/components/common/custom-table/kc-table-pagination.directive.js" type="text/javascript"></script>
+<script src="/components/common/custom-table/kc-table-cell.directive.js" type="text/javascript"></script>
+<script src="/components/common/custom-table/kc-table.module.js" type="text/javascript"></script>
+
+<script src="/components/components.js" type="text/javascript"></script>
+<!-- END COMPONENTS ANGULARJS SCRIPTS -->
+
+<!-- END APP LEVEL ANGULARJS SCRIPTS-->
+<!-- BEGIN APP LEVEL JQUERY SCRIPTS-->
+<script src="/assets/global/scripts/app.min.js" type="text/javascript"></script>
+<script src="/assets/layouts/layout/scripts/layout.js" type="text/javascript"></script>
+<script src="/assets/pages/scripts/components-date-time-pickers.js" type="text/javascript"></script>
+
+
+<!-- END APP LEVEL JQUERY SCRIPTS-->
+<script src="/assets/vendors/angular-cache/dist/angular-cache.min.js"></script>
+<script src="/assets/vendors/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
+<script src="/assets/vendors/ladda/dist/spin.min.js"></script>
+<script src="/assets/vendors/ladda/dist/ladda.min.js"></script>
+<script src="/assets/vendors/angular-ladda/dist/angular-ladda.min.js"></script>
+<script src="/assets/vendors/angular-spinner/angular-spinner.min.js"></script>
+<script src="/assets/vendors/AngularJS-Toaster/toaster.min.js"></script>
+
+<script src="/assets/vendors/ng-dialog/js/ngDialog.min.js" type="text/javascript"></script>
+
+{#<script src="/assets/pages/scripts/ui-extended-modals.js" type="text/javascript"></script>#}
+
+<!-- END JAVASCRIPTS-->
+</body>
+<!-- END BODY-->
+</html>

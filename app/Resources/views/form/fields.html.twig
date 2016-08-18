@@ -1,0 +1,129 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block form_label %}
+    {% spaceless %}
+        {% set label_attr = label_attr|merge({
+        'class': 'control-label col-md-2'
+        }) %}
+        {% set required = false %}
+        {{ parent() }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block form_row %}
+    {% spaceless %}
+
+        {% if row_type is defined %}
+            {% if row_type == 'long' %}{% set row_class = 'col-md-10' %}{% endif %}
+        {% else %}
+            {% set row_class = 'col-md-4' %}
+        {% endif %}
+
+        <div class="form-group form-group-inline">
+            {{ form_label(form) }}
+            <div class="{{ row_class }}">
+                <div ng-class="{'has-error':
+                        {{ form|form_root_name }}['{{ form.vars.full_name }}'].$error.serverMessage}"
+                >
+
+                    {% set attr = attr|merge({
+                    'class': 'form-control input-lg',
+                    'ng-model': 'modalCtrl.fields["' ~ form.vars.full_name ~ '"]',
+                    'ng-change': 'modalCtrl.onchange("' ~ form.vars.full_name ~ '")'
+                    }) %}
+
+                    {% if form.vars.value is not empty %}
+                        {% if form.vars.value matches '/^[0-9\.]+$/' %}
+                            {% set val = form.vars.value %}
+                        {% else %}
+                            {% set val = '"'  ~ form.vars.value ~ '"' %}
+                        {% endif %}
+
+                        {% set attr = attr|merge({
+                        'ng-init': 'modalCtrl.fields["' ~ form.vars.full_name ~ '"] = ' ~ val
+                        }) %}
+                    {% endif %}
+
+                    {{ form_widget(form, {'attr': attr}) }}
+
+                    {# Local validation for required fields only #}
+                    {#{% if required is not empty %}#}
+                    {#<span class="help-block"#}
+                    {#ng-show="{{ form|form_root_name }}['{{ form.vars.full_name }}'].$dirty && {{ form|form_root_name }}['{{ form.vars.full_name }}'].$error.required"#}
+                    {#>{{ "This value should not be blank."|trans }}</span>#}
+                    {#{% endif %}#}
+
+                    {# Show server error messages #}
+                    <span class="help-block"
+                          ng-show="{{ form|form_root_name }}['{{ form.vars.full_name }}'].$error.serverMessage"
+                          ng-bind="{{ form|form_root_name }}['{{ form.vars.full_name }}'].$error.serverMessage"
+                    ></span>
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{# DateTimePicker widget #}
+{% block date_time_picker_widget %}
+    {% spaceless %}
+        <div class="input-group date form_datetime" kc-datetime-picker>
+
+            {% set attr = attr|merge({'readonly': 'readonly', 'format': format}) %}
+            {{ block('form_widget_simple') }}
+
+            <span class="input-group-btn">
+                <button class="btn btn-lg default date-set" type="button">
+                    <i class="fa fa-calendar"></i>
+                </button>
+            </span>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{# Form files input #}
+{% block file_widget %}
+    {% spaceless %}
+        {% set attr = attr|merge({
+            'fileread': 'modalCtrl.fields["' ~ form.vars.full_name ~ '"]'
+        }) %}
+        <input type="file" {{ block('widget_attributes') }} />
+    {% endspaceless %}
+{% endblock %}
+
+{# Bootstrap angular checkbox #}
+{% block checkbox_widget %}
+    {% spaceless %}
+        {% set attr = attr|merge({
+        'class': 'btn-checkbox'
+        }) %}
+        {% set attr = attr|merge({
+        'ng-init': 'modalCtrl.fields["' ~ form.vars.full_name ~ '"] = "' ~ form.vars.checked ~ '"'
+        }) %}
+        <checkbox
+                {{ block('widget_attributes') }}
+                ng-model="modalCtrl.fields['{{ form.vars.full_name }}']"
+                ng-true-value="1"
+                ng-false-value="0"
+        ></checkbox>
+    {% endspaceless %}
+{% endblock %}
+
+{# Choice angular options #}
+{%- block choice_widget_options -%}
+    {% for group_label, choice in options %}
+        {%- if choice is iterable -%}
+            <optgroup label="{{ choice_translation_domain is same as(false) ? group_label : group_label|trans({}, choice_translation_domain) }}">
+                {% set options = choice %}
+                {{- block('choice_widget_options') -}}
+            </optgroup>
+        {%- else -%}
+            {% set attr = choice.attr %}
+            <option value="{{ choice.value }}"
+                    {{ block('attributes') }}
+                    {% if choice is selectedchoice(value) %} ng-selected="true" selected="selected"{% endif %}
+            >{{ choice_translation_domain is same as(false) ? choice.label : choice.label|trans({}, choice_translation_domain) }}
+            </option>
+        {%- endif -%}
+    {% endfor %}
+{%- endblock choice_widget_options -%}

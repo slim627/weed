@@ -1,0 +1,42 @@
+<!-- BEGIN MAIN CONTENT-->
+<div ng-controller="patientPrescriptionsController as prescriptionCtrl" class="page-content-container">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN BORDERED TABLE PORTLET-->
+            <div class="portlet light portlet-fit bordered"
+                 kind-cann-table
+                 datasource="prescriptionsService"
+                 {% if is_granted('ROLE_PATIENT_PRESCRIPTION_EDIT') %}
+                 row-click-handler="prescriptionCtrl.open"
+                 {% endif %}
+            >
+                <div class="caption">
+                    <span class="caption-subject font-blue sbold uppercase">
+                        Prescriptions
+                    </span>
+                </div>
+                <div class="actions" >
+                    <div class="controls">
+                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                            <div class="table-group-actions pull-right">
+                                {% if is_granted('ROLE_PATIENT_PRESCRIPTION_PRINT') %}
+                                <button class="btn btn-default btn-sm" ng-click="prescriptionCtrl.print('{{ path('patient.prescription_print_data') }}')" ><i class="fa fa-print"></i> Print</button>
+                                {% endif %}
+                                {% if is_granted('ROLE_PATIENT_PRESCRIPTION_CREATE') %}
+                                <button
+                                        class="btn btn-info btn-sm active"
+                                        ng-click="prescriptionCtrl.add()"
+                                        ladda="prescriptionCtrl.dialogInProgress">
+                                    <i class="fa fa-user"></i> Add new prescription</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- END BORDERED TABLE PORTLET-->
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT-->

@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-8 col-sm-8">
+    Showing {[{firstShowingRecordNumber}]} to {[{lastShowingRecordNumber}]} of {[{totalRowCount}]} records
+  </div>
+  <div class="col-md-4 col-sm-4">
+    <div class="dataTables_paginate paging_bootstrap_extended text-right">
+      <div class="pagination-panel">
+        Page
+        <button ng-click="prevPage()"
+                class="btn btn-sm default prev"
+                ng-class="{'disabled': currentPage == 1}"
+        >
+          <i class="fa fa-angle-left"></i>
+        </button>
+        <input type="number"
+               class="pagination-panel-input form-control input-sm input-inline input-mini"
+               maxlenght="5"
+               style="text-align:center; margin: 0 5px; width: 60px !important;"
+               min="1"
+               ng-model="currentPage"
+        >
+        <button ng-click="nextPage()"
+                class="btn btn-sm default next"
+                ng-class="{'disabled': currentPage == maxPages}"
+        >
+          <i class="fa fa-angle-right"></i>
+        </button>
+        of
+        <span class="pagination-panel-total" ng-bind="maxPages"></span>
+      </div>
+    </div>
+  </div>
+</div>

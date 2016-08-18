@@ -1,0 +1,211 @@
+// BEGIN PAGE HEADER
+.page-bar
+  ul.page-breadcrumb
+    li
+      a(href='#/dashboard.html') Home
+      i.fa.fa-circle
+    li
+      a(href='#') Dashboard
+
+h3.page-title  Dashboard
+// END PAGE HEADER
+// BEGIN MAIN CONTENT
+div.page-content-container(ng-controller='DashboardController')
+
+  // BEGIN DASHBOARD STATS
+  .row
+    .col-lg-3.col-md-3.col-sm-6.col-xs-12
+      .dashboard-stat.blue
+        .visual
+          i.fa.fa-comments
+        .details
+          .number  1349
+          .desc  New Feedbacks
+        a.more(href='#')
+          | View more
+          i.m-icon-swapright.m-icon-white
+    .col-lg-3.col-md-3.col-sm-6.col-xs-12
+      .dashboard-stat.red
+        .visual
+          i.fa.fa-bar-chart-o
+        .details
+          .number  12,5M$
+          .desc  Total Profit
+        a.more(href='#')
+          | View more
+          i.m-icon-swapright.m-icon-white
+    .col-lg-3.col-md-3.col-sm-6.col-xs-12
+      .dashboard-stat.green
+        .visual
+          i.fa.fa-shopping-cart
+        .details
+          .number  549
+          .desc  New Orders
+        a.more(href='#')
+          | View more
+          i.m-icon-swapright.m-icon-white
+    .col-lg-3.col-md-3.col-sm-6.col-xs-12
+      .dashboard-stat.purple
+        .visual
+          i.fa.fa-globe
+        .details
+          .number  +89%
+          .desc  Brand Popularity
+        a.more(href='#')
+          | View more
+          i.m-icon-swapright.m-icon-white
+  // END DASHBOARD STATS
+  .row
+    .col-md-6.col-sm-12
+      // BEGIN PORTLET
+      .portlet.light.bordered
+        .portlet-title
+          .caption.caption-md
+            i.icon-settings.font-green
+            span.caption-subject.font-green.bold.uppercase Sales Summary
+            span.caption-helper.hide weekly stats...
+          .actions
+            .btn-group.btn-group-devided(data-toggle='buttons')
+              label.btn.dark.btn-outline.btn-circle.btn-sm.active
+                input#option1.toggle(type='radio', name='options')
+                | Today
+              label.btn.dark.btn-outline.btn-circle.btn-sm
+                input#option2.toggle(type='radio', name='options')
+                | Week
+              label.btn.dark.btn-outline.btn-circle.btn-sm
+                input#option2.toggle(type='radio', name='options')
+                | Month
+        .portlet-body
+          .row.list-separated
+            .col-md-3.col-sm-3.col-xs-6
+              .font-grey-mint.font-sm  Total Sales
+              .uppercase.font-hg.font-red-flamingo
+                | 13760
+                span.font-lg.font-grey-mint $
+            .col-md-3.col-sm-3.col-xs-6
+              .font-grey-mint.font-sm  Revenue
+              .uppercase.font-hg.font-green
+                | 4760
+                span.font-lg.font-grey-mint $
+            .col-md-3.col-sm-3.col-xs-6
+              .font-grey-mint.font-sm  Expenses
+              .uppercase.font-hg.font-purple
+                | 1760
+                span.font-lg.font-grey-mint $
+            .col-md-3.col-sm-3.col-xs-6
+              .font-grey-mint.font-sm  Growth
+              .uppercase.font-hg.font-blue
+                | 9760
+                span.font-lg.font-grey-mint $
+          ul.list-separated.list-inline-xs.hide
+            li
+              .font-grey-mint.font-sm  Total Sales
+              .uppercase.font-hg.font-red-flamingo
+                | 13760
+                span.font-lg.font-grey-mint $
+            li
+            li.border
+              .font-grey-mint.font-sm  Revenue
+              .uppercase.font-hg.font-green
+                | 4760
+                span.font-lg.font-grey-mint $
+            li.divider
+            li
+              .font-grey-mint.font-sm  Expenses
+              .uppercase.font-hg.font-purple
+                | 1760
+                span.font-lg.font-grey-mint $
+            li.divider
+            li
+              .font-grey-mint.font-sm  Growth
+              .uppercase.font-hg.font-blue
+                | 9760
+                span.font-lg.font-grey-mint $
+          #sales_statistics.portlet-body-morris-fit.morris-chart(style='height: 260px')
+      // END PORTLET
+    .col-md-6.col-sm-12
+      // BEGIN PORTLET
+      .portlet.light.bordered
+        .portlet-title
+          .caption.caption-md
+            i.icon-bar-chart.font-red
+            span.caption-subject.font-red.bold.uppercase Member Activity
+            span.caption-helper.hide weekly stats...
+          .actions
+            .btn-group.btn-group-devided(data-toggle='buttons')
+              label.btn.green.btn-outline.btn-circle.btn-sm.active
+                input#option1.toggle(type='radio', name='options')
+                | Today
+              label.btn.red.btn-outline.btn-circle.btn-sm
+                input#option2.toggle(type='radio', name='options')
+                | Week
+              label.btn.blue.btn-outline.btn-circle.btn-sm
+                input#option2.toggle(type='radio', name='options')
+                | Month
+        .portlet-body
+          .row.number-stats.margin-bottom-30
+            .col-md-6.col-sm-6.col-xs-6
+              .stat-left
+                .stat-chart
+                  // do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break
+                  #sparkline_bar
+                .stat-number
+                  .title  Total
+                  .number  2460
+            .col-md-6.col-sm-6.col-xs-6
+              .stat-right
+                .stat-chart
+                  // do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break
+                  #sparkline_bar2
+                .stat-number
+                  .title  New
+                  .number  719
+          .table-scrollable.table-scrollable-borderless
+            table.table.table-hover.table-light
+              thead
+                tr.uppercase
+                  th(colspan='2')  MEMBER
+                  th  Earnings
+                  th  CASES
+                  th  CLOSED
+                  th  RATE
+              tr
+                td
+                  a.primary-link(href='javascript:;') Brain
+                td  $345
+                td  45
+                td  124
+                td
+                  span.bold.font-green 80%
+              tr
+                td
+                  a.primary-link(href='javascript:;') Nick
+                td  $560
+                td  12
+                td  24
+                td
+                  span.bold.font-green 67%
+              tr
+                td
+                  a.primary-link(href='javascript:;') Tim
+                td  $1,345
+                td  450
+                td  46
+                td
+                  span.bold.font-green 98%
+              tr
+                td
+                  a.primary-link(href='javascript:;') Tom
+                td  $645
+                td  50
+                td  89
+                td
+                  span.bold.font-green 58%
+      // END PORTLET
+
+// END MAIN CONTENT
+// BEGIN MAIN JS & CSS
+script.
+  Dashboard.init();
+// BEGIN MAIN JS & CSS
+

@@ -1,0 +1,34 @@
+<!-- BEGIN MAIN CONTENT-->
+<div ng-controller="patientHistoryController as historyCtrl" class="page-content-container">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- BEGIN BORDERED TABLE PORTLET-->
+            <div class="portlet light portlet-fit bordered"
+                 kind-cann-table
+                 datasource="historyService"
+                 row-click-handler=""
+            >
+                <div class="caption">
+                    <span class="caption-subject font-blue sbold uppercase">
+                        History
+                    </span>
+                </div>
+                <div class="actions" >
+                    <div class="controls">
+                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                            <div class="table-group-actions pull-right">
+                                {% if is_granted('ROLE_PATIENT_HISTORY_PRINT') %}
+                                <button class="btn btn-default btn-sm" ng-click="historyCtrl.print('{{ path('patient_histories_print_data') }}')" ><i class="fa fa-print"></i> Print</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- END BORDERED TABLE PORTLET-->
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT-->

@@ -1,0 +1,41 @@
+// DOC: Apply "page-header-fixed-mobile" and "page-footer-fixed-mobile" class to body element to force fixed header or footer in mobile devices
+// DOC: Apply "page-sidebar-closed" class to the body and "page-sidebar-menu-closed" class to the sidebar menu element to hide the sidebar by default
+// DOC: Apply "page-sidebar-hide" class to the body to make the sidebar completely hidden on toggle
+// DOC: Apply "page-sidebar-closed-hide-logo" class to the body element to make the logo hidden on sidebar toggle
+// DOC: Apply "page-sidebar-hide" class to body element to completely hide the sidebar on sidebar toggle
+// DOC: Apply "page-sidebar-fixed" class to have fixed sidebar
+// DOC: Apply "page-footer-fixed" class to the body element to have fixed footer
+// DOC: Apply "page-sidebar-reversed" class to put the sidebar on the right side
+// DOC: Apply "page-full-width" class to the body element to have full width page without the sidebar menu
+//body.page-header-fixed.page-sidebar-closed-hide-logo.page-on-load(ng-controller='AppController', ng-class="{'page-content-white': settings.layout.pageContentWhite,'page-container-bg-solid': settings.layout.pageBodySolid, 'page-sidebar-closed': settings.layout.pageSidebarClosed}")
+div#view-content.page-header-fixed.page-sidebar-closed-hide-logo.page-container-bg-solid(ng-controller='AppController', ng-class="{'page-content-white': settings.layout.pageContentWhite,'page-container-bg-solid': settings.layout.pageBodySolid, 'page-sidebar-closed': settings.layout.pageSidebarClosed}")
+    // BEGIN PAGE SPINNER
+    .page-spinner-bar(ng-spinner-bar='')
+      .bounce1
+      .bounce2
+      .bounce3
+    // END PAGE SPINNER
+    // BEGIN HEADER
+    .page-header.navbar.navbar-fixed-top(data-ng-include="'tpl/header.html'", data-ng-controller='HeaderController')
+    // END HEADER
+    .clearfix
+    // BEGIN CONTAINER
+    .page-container
+      // BEGIN SIDEBAR
+      .page-sidebar-wrapper(data-ng-include="'tpl/sidebar.html'", data-ng-controller='SidebarController')
+      // END SIDEBAR
+
+      // BEGIN CONTENT
+      .page-content-wrapper
+        .page-content
+          // BEGIN ACTUAL CONTENT
+          .fade-in-up(ui-view='' name="page-view")
+          // END ACTUAL CONTENT
+      // END CONTENT
+
+    // END CONTAINER
+    // BEGIN FOOTER
+    .page-footer(data-ng-include="'tpl/footer.html'", data-ng-controller='FooterController')
+    // END FOOTER
+
+

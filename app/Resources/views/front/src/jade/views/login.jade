@@ -1,0 +1,41 @@
+// BEGIN CONTENT
+.login(ng-controller='LoginController')
+  // BEGIN LOGO
+  .logo
+    a(href='index.html')
+      img(src='./img/logo.png', alt='')
+  // END LOGO
+  // BEGIN LOGIN
+  .content
+    // BEGIN LOGIN FORM
+    form.login-form(ng-submit="doLogin()")
+      h3.form-title.font-green Sign In
+      .alert.alert-danger.display-hide
+        button.close(data-close='alert')
+        span  Enter any username and password.
+      .form-group
+        // ie8, ie9 does not support html5 placeholder, so we just show field title for that
+        label.control-label.visible-ie8.visible-ie9 Username
+        input.form-control.form-control-solid.placeholder-no-fix(type='text', autocomplete='off', placeholder='Username', name='username')
+      .form-group
+        label.control-label.visible-ie8.visible-ie9 Password
+        input.form-control.form-control-solid.placeholder-no-fix(type='password', autocomplete='off', placeholder='Password', name='password')
+      .form-actions
+        button.btn.green.uppercase(type='submit') Login
+
+        a#forget-password.forget-password(href='javascript:;') Forgot Password?
+
+    // END LOGIN FORM
+    // BEGIN FORGOT PASSWORD FORM
+    form.forget-form(action='/dashboard', method='post')
+      h3.font-green Forget Password ?
+      p  Enter your e-mail address below to reset your password.
+      .form-group
+        input.form-control.placeholder-no-fix(type='text', autocomplete='off', placeholder='Email', name='email')
+      .form-actions
+        button#back-btn.btn.btn-default(type='button') Back
+        button.btn.btn-success.uppercase.pull-right(type='submit') Submit
+    // END FORGOT PASSWORD FORM
+
+  .copyright  2016 © KindCann
+// END CONTENT

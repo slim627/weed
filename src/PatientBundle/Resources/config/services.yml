@@ -1,0 +1,53 @@
+services:
+    kx.patient.controller:
+        class: PatientBundle\Controller\DefaultController
+        calls:
+            - [setContainer, [@service_container]]
+
+    kx.prescription.controller:
+        class: PatientBundle\Controller\PrescriptionController
+        calls:
+            - [setContainer, [@service_container]]
+
+    note_form_type:
+        class: PatientBundle\Form\Type\NoteType
+        tags:
+          - { name: form.type }
+
+    complaint_form_type:
+        class: PatientBundle\Form\Type\ComplaintType
+        calls:
+          - [setContainer, [@service_container]]
+        tags:
+          - { name: form.type }
+
+    prescription_form_type:
+        class: PatientBundle\Form\Type\PrescriptionType
+        tags:
+          - { name: form.type }
+
+    patient_form_type:
+        class: PatientBundle\Form\Type\PatientType
+        tags:
+          - { name: form.type }
+
+    patient_history_event:
+        class: PatientBundle\Event\PatientHistoryListener
+        tags:
+          - { name: kernel.event_listener, event: patient.history.event, method: onEventWithPatient, priority: 100 }
+        arguments: [ @doctrine.orm.entity_manager ]
+
+    generate_code_patient.subscriber:
+        class: PatientBundle\EventListener\PatientSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    generate_code_complaint.subscriber:
+        class: PatientBundle\EventListener\ComplaintSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
+    generate_code_note.subscriber:
+        class: PatientBundle\EventListener\NotesSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }

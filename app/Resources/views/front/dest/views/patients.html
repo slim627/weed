@@ -1,0 +1,93 @@
+
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+  <ul class="page-breadcrumb">
+    <li><a href="#/dashboard.html">Home</a><i class="fa fa-circle"></i></li>
+    <li><a href="#">Patients</a></li>
+  </ul>
+</div>
+<h3 class="page-title"> Patients</h3>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT-->
+<div ng-controller="PatientsController as patients" class="page-content-container">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- BEGIN BORDERED TABLE PORTLET-->
+      <div class="portlet light portlet-fit bordered">
+        <div class="portlet-title">
+          <div class="row">
+            <div class="col-md-2 col-sm-12">
+              <div id="datatable_ajax_length" class="dataTables_length">
+                <label>Show
+                  <select name="datatable_ajax_length" aria-controls="datatable_ajax" class="form-control input-xs input-sm input-inline">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="-1">All</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <div id="sample_1_filter" class="dataTables_filter">
+                <label>Search:
+                  <input type="search" placeholder="" aria-controls="sample_1" class="form-control input-sm input-small input-inline"/>
+                </label>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+              <div class="table-group-actions pull-right">
+                <button class="btn btn-info btn-sm active"><i class="fa fa-user"></i> Add new patient</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <div class="table-scrollable table-scrollable-borderless">
+            <table class="table table-hover table-light">
+              <thead>
+                <tr class="uppercase">
+                  <th> Patient</th>
+                  <th> Id number</th>
+                  <th> Presc expiry</th>
+                  <th> 30 day limit</th>
+                  <th> Daily limit</th>
+                  <th> Cycle start</th>
+                  <th> Cycle end</th>
+                  <th> Grams Left</th>
+                  <th> Last order</th>
+                  <th> Phone</th>
+                  <th> Doctor</th>
+                  <th> Health N</th>
+                  <th> Verified</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="item in patients.patientsData.patients track by $index" ng-click="patients.openPatient(item)">
+                  <td ng-bind="item.name"></td>
+                  <td ng-bind="item._id"></td>
+                  <td ng-bind="item.prescExpiry"></td>
+                  <td ng-bind="item.thirtyDayLimit"></td>
+                  <td ng-bind="item.daylyLimit"></td>
+                  <td ng-bind="item.cycleStart"></td>
+                  <td ng-bind="item.cycleEnd"></td>
+                  <td ng-bind="item.gramsLeft"></td>
+                  <td ng-bind="item.lastOrder"></td>
+                  <td ng-bind="item.phone"></td>
+                  <td ng-bind="item.doctor"></td>
+                  <td ng-bind="item.heanltN"></td>
+                  <td ng-bind="item.verified"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- END BORDERED TABLE PORTLET-->
+      
+    </div>
+  </div>
+</div>
+<!-- END MAIN CONTENT-->

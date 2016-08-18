@@ -1,0 +1,79 @@
+<div class="portlet-title" ng-transclude="">
+
+
+</div>
+<div class="portlet-body">
+  <div class="row">
+    <div class="col-md-3 col-sm-12">
+      <div id="datatable_ajax_length" class="dataTables_length">
+        <label>Show
+          <select name="datatable_ajax_length"
+                  aria-controls="datatable_ajax"
+                  class="form-control input-xs input-sm input-inline"
+                  ng-model="tableCtrl.rowsOnPage"
+                  ng-change="tableCtrl.onChangeRowsOnPage()"
+                  >
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="250">250</option>
+          </select>
+        </label>
+      </div>
+
+
+    </div>
+    <div class="col-md-6 col-sm-12">
+      <div id="sample_1_filter" class="dataTables_filter">
+        <!--<label>Search:-->
+          <input type="search"
+                 placeholder="Search"
+                 ng-model="tableCtrl.searchString"
+                 ng-model-options="{ debounce: 1000 }"
+                 ng-change="tableCtrl.searchStringChanged()"
+                 class="form-control input-sm input-small input-inline"/>
+        <!--</label>-->
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-12">
+
+    </div>
+  </div>
+  <div class="table-scrollable table-scrollable-borderless">
+    <div ng-if="tableCtrl.items.length === 0">No data for displaying</div>
+    <span us-spinner spinner-on="tableCtrl.dataSource.inProgress"></span>
+    <table
+      class="table table-hover table-light"
+      ng-if="tableCtrl.items.length > 0"
+      ng-class="{'loading': tableCtrl.dataSource.inProgress}"
+    >
+      <thead>
+      <tr class="uppercase">
+        <th
+            ng-repeat="(key, val) in tableCtrl.headRow"
+            kc-table-cell
+            kc-table-cell-position="header"
+            kc-table-cell-type="val.type"
+            kc-table-cell-data="val.title"
+        > {[{::val.title}]}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in tableCtrl.items track by $index" ng-click="tableCtrl.rowClickHandler(item)">
+        <td
+          ng-repeat="field in item track by $index"
+          kc-table-cell
+          kc-table-cell-position="body"
+          kc-table-cell-type="tableCtrl.headRow[$index].type"
+          kc-table-cell-data="field"
+        >
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Start pagination -->
+  <div kc-table-paginator ng-if="tableCtrl.items.length !== 0"></div>
+  <!-- End pagination -->
+</div>

@@ -1,0 +1,30 @@
+services:
+    annotations.kxsecure_listener:
+        class: StaffBundle\EventListener\KXSecureListener
+        tags: [{name: kernel.event_listener, event: kernel.controller, method: onKernelController}]
+        arguments: [@annotation_reader, @service_container]
+
+    security.role_hierarchy:
+        class: StaffBundle\Security\RoleHierarchy
+        arguments: [%security.role_hierarchy.roles%, @doctrine.orm.default_entity_manager]
+
+    security.super_admin_voter:
+        class: StaffBundle\Security\Voter\SuperAdminVoter
+        public: false
+        tags:
+            - { name: security.voter }
+
+    security.authentication_handler:
+        class: StaffBundle\Security\AuthenticationHandler
+        calls:
+            - [setContainer, [@service_container]]
+
+    security.ajax_entry_point:
+        class: StaffBundle\Security\EntryPoint\AjaxEntryPoint
+
+    form.staff.employee:
+        class: StaffBundle\Form\Type\EmployeeFormType
+        calls:
+            - [setContainer, [@service_container]]
+        tags:
+            - {name: form.type}

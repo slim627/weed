@@ -1,0 +1,167 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <!-- BEGIN PAGE HEADER-->
+    <h3 class="page-title"> Patient profile</h3>
+
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li><a href="#/dashboard.html">Home</a><i class="fa fa-circle"></i></li>
+            <li><a ui-sref="patient_list">Patients</a><i class="fa fa-circle"></i></li>
+            <li>Profile</li>
+        </ul>
+    </div>
+    <!-- END PAGE HEADER-->
+    <!-- BEGIN MAIN CONTENT-->
+    <div ng-controller="patientProfileController as patientProfile" class="page-content-container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- BEGIN PROFILE SIDEBAR-->
+                <div class="profile-sidebar">
+                    <!-- PORTLET MAIN-->
+                    <div class="portlet light profile-sidebar-portlet">
+                        <!-- END SIDEBAR USERPIC-->
+                        <!-- SIDEBAR USER TITLE-->
+                        <div class="profile-usertitle text-left">
+                            <div class="profile-usertitle-name" ng-bind="patientProfile.dataSource.currentPatient.name"> </div>
+                            <div class="profile-usertitle-job" ng-bind="patientProfile.dataSource.currentPatient.idNumber"> </div>
+
+                            {% if is_granted('ROLE_PATIENT_VERIFY') %}
+                            <div class="btn-group" ng-cloak="true">
+                                <a class="btn btn-md dropdown-toggle"
+                                   href="javascript:;"
+                                   data-toggle="dropdown"
+                                   aria-expanded="false"
+                                   ng-class="{'green': patientProfile.dataSource.currentPatient.verified == true, 'red': patientProfile.dataSource.currentPatient.verified == false}"
+                                    ladda="patientProfile.dataSource.verifyingInProgress">
+                                    <span ng-if="patientProfile.dataSource.currentPatient.verified">Verified</span>
+                                    <span ng-if="!patientProfile.dataSource.currentPatient.verified">Not verified</span>
+                                    <i class="fa fa-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li ng-if="patientProfile.dataSource.currentPatient.verified">
+                                        <a href="javascript:;" ng-click="patientProfile.changePatientVerifiedStatus(0)"> Not verified &nbsp;&nbsp;</a>
+                                    </li>
+                                    <li ng-if="!patientProfile.dataSource.currentPatient.verified">
+                                        <a href="javascript:;" ng-click="patientProfile.changePatientVerifiedStatus(1)"> Verified &nbsp;&nbsp;</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            {% endif %}
+
+                        </div>
+                        <!-- END SIDEBAR USER TITLE-->
+                        <!-- SIDEBAR MENU-->
+                        <div class="profile-usermenu">
+                            <ul class="nav">
+                                {% if is_granted('ROLE_PATIENT_VIEW') %}
+                                <li ng-class="{active: $state.includes('patient.overview')}">
+                                    <a ui-sref="patient.overview">{{ "Overview"|trans }}</a>
+                                </li>
+                                {% endif %}
+                                {% if is_granted('ROLE_COMPLAINT_LIST') %}
+                                <li ng-class="{active: $state.includes('patient.complaints')}">
+                                    <a ui-sref="patient.complaints({id: patientProfile.currentState.params.id})">{{ "Complaints"|trans }}</a>
+                                </li>
+                                {% endif %}
+                                {% if is_granted('ROLE_PATIENT_NOTE_AND_TASK_LIST') %}
+                                <li ng-class="{active: $state.includes('patient.notes')}">
+                                    <a ui-sref="patient.notes({id: patientProfile.currentState.params.id})">{{ "Notes & Tasks"|trans }}</a>
+                                </li>
+                                {% endif %}
+                                {% if is_granted('ROLE_PATIENT_HISTORY_LIST') %}
+                                <li ng-class="{active: $state.includes('patient.history')}">
+                                    <a ui-sref="patient.history({id: patientProfile.currentState.params.id})">{{ "History"|trans }}</a>
+                                </li>
+                                {% endif %}
+                                {#<li ng-class="{active: $state.includes('page.profile.complaints')}">#}
+                                    {#<a ui-sref="patient.complaints">{{ "Orders"|trans }}</a>#}
+                                {#</li>#}
+                                {% if is_granted('ROLE_PATIENT_PRESCRIPTION_LIST') %}
+                                <li ng-class="{active: $state.includes('patient.prescriptions')}">
+                                    <a ui-sref="patient.prescriptions({id: patientProfile.currentState.params.id})">{{ "Prescriptions"|trans }}</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <!-- END MENU-->
+                    </div>
+                    <!-- END PORTLET MAIN-->
+                    <!-- PORTLET MAIN-->
+                    <div class="portlet light no-title-bottom-padding">
+                        <div class="portlet-title">
+                            <div class="caption caption-md">
+                                <span class="caption-subject font-blue-madison bold uppercase" >About {[{patientProfile.dataSource.currentPatient.name}]}</span>
+                            </div>
+                            <div class="actions">
+                                <div data-toggle="buttons" class="btn-group btn-group-devided">
+                                    {% if is_granted('ROLE_PATIENT_EDIT') %}
+                                    <button
+                                        class="btn default btn-outline"
+                                        ladda="patientProfile.openButton_about"
+                                        ng-click="patientProfile.editPatient({activeTab: 'tab_about', openDialogButton: 'about'})"
+                                        data-spinner-color="#3598dc"><i class="fa fa-edit"></i>&nbsp Edit</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="number-stats margin-bottom-30 table-scrollable table-scrollable-borderless">
+                                <table class="table table-light table-without-bottom-border table-small-td-paddings disable-hover">
+                                    <tr>
+                                        <td>Health card:</td>
+                                        <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.healthNumber"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Expiry:</td>
+                                        <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.prescExpiry * 1000 | date"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date of birth:</td>
+                                        <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.dateOfBirth * 1000 | date"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Member expiry:</td>
+                                        <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.memberExpire * 1000 | date"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Account manager:</td>
+                                        <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.accountManager.name"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Last online visit:</td>
+                                        <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.lastOnlineVisit * 1000 | date"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Online account:</td>
+                                        <td class="text-right">
+                                            <div
+                                                ng-if="patientProfile.dataSource.currentPatient.onlineAccount"
+                                                class="label label-success"
+                                            >Approved</div>
+                                            <div
+                                                ng-if="!patientProfile.dataSource.currentPatient.onlineAccount"
+                                                class="label label-danger"
+                                            >Not approved</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diagnosis:</td>
+                                        <td class="text-right bold" ng-bind="patientProfile.dataSource.currentPatient.diagnosis"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END PORTLET MAIN-->
+                </div>
+                <!-- END BEGIN PROFILE SIDEBAR-->
+                <!-- BEGIN PROFILE CONTENT-->
+                <div ui-view="" name="profile-view" class="profile-content fade-in-up"></div>
+                <!-- END PROFILE CONTENT-->
+            </div>
+        </div>
+        <!-- END PAGE CONTENT-->
+
+    </div>
+{% endblock content %}

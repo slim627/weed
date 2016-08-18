@@ -1,0 +1,112 @@
+{{ form_start(form, {'attr': {'ng-submit': 'modalCtrl.onSubmit("' ~ path('note_submit') ~'")', 'novalidate': 'novalidate'}}) }}
+
+<div class="portlet light bordered" ng-init="modalCtrl.formName='{{ form.vars.name }}'">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-blue uppercase" ng-if="!modalCtrl.isEdit">New task</span>
+            <span class="caption-subject font-blue uppercase" ng-if="modalCtrl.isEdit">Edit task</span>
+        </div>
+        <div class="tools">
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form action="#" class="form-horizontal">
+            <div class="form-body">
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.title) }}
+                        {{ form_row(form.accountPhone) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.patient) }}
+                        {{ form_row(form.contactPhone) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.complaint) }}
+                        {{ form_row(form.accountStatus) }}
+
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.actionType) }}
+                        {{ form_row(form.assignedTo) }}
+
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.startTime) }}
+                        {{ form_row(form.endTime) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+
+
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.description, {'row_type': 'long'}) }}
+                    </div>
+                </div>
+                <!--/row-->
+                <div class="caption form-section">
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.isComplete) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.completeDate) }}
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row mb20">
+                    <div class="col-md-12">
+                        {{ form_row(form.note, {'row_type': 'long'}) }}
+                    </div>
+                    <!--/span-->
+                </div>
+
+            </div>
+            <div class="form-actions right">
+                <button
+                        type="button"
+                        class="btn default"
+                        ng-click="modalCtrl.closeThisDialog()"
+                >Cancel</button>
+                <button
+                        type="submit"
+                        class="btn blue"
+                        ladda="modalCtrl.inProgress"
+                        ng-disable="{{ form.vars.name }}.$invalid' == true">
+                    <i class="fa fa-check"></i> Save</button>
+            </div>
+            <input type="hidden" name="id" ng-model="modalCtrl.fields.id" ng-init="modalCtrl.fields.id = '{% if id is defined %}{{ id }} {% endif %}'"/>
+
+        </form>
+        <!-- END FORM-->
+    </div>
+</div>
+
+{{ form_end(form) }}

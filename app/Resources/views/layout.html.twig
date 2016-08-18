@@ -1,0 +1,209 @@
+<div id="view-content" ng-controller="AppController" ng-class="{ 'page-sidebar-closed': settings.layout.pageSidebarClosed}" class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid">
+    <!-- BEGIN PAGE SPINNER-->
+    <div ng-spinner-bar="" class="page-spinner-bar">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+    <!-- END PAGE SPINNER-->
+    <!-- BEGIN HEADER-->
+    <div  data-ng-controller="headController as headCtrl" class="page-header navbar navbar-fixed-top">
+        <!-- BEGIN HEADER INNER-->
+        <div kind-cann-header="" class="page-header-inner">
+            <!-- BEGIN LOGO-->
+            <div class="page-logo"><a ui-sref="dashboard"><img src="{{ asset('/img/logo.png')}}" alt="logo" class="logo-default"/></a>
+                <div class="menu-toggler sidebar-toggler">
+                    <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header-->
+                </div>
+            </div>
+            <!-- END LOGO-->
+            <!-- BEGIN HEADER SEARCH BOX-->
+            <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box-->
+            <form action="#" method="GET" class="search-form">
+                <div class="input-group">
+                    <input type="text" placeholder="Search..." name="query" class="form-control"/><span class="input-group-btn"><a href="javascript:;" class="btn submit"><i class="icon-magnifier"></i></a></span>
+                </div>
+            </form>
+            <!-- END HEADER SEARCH BOX-->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER--><a href="javascript:;" data-toggle="collapse" data-target=".navbar-collapse" class="menu-toggler responsive-toggler"></a>
+            <!-- END RESPONSIVE MENU TOGGLER-->
+            <!-- BEGIN TOP NAVIGATION MENU-->
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    <!-- BEGIN NOTIFICATION DROPDOWN-->
+                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte-->
+                    <li id="header_notification_bar" class="dropdown dropdown-extended dropdown-notification"><a href="#" dropdown-menu-hover="" data-toggle="dropdown" data-close-others="true" class="dropdown-toggle"><i class="icon-bell"></i><span class="badge badge-default" ng-show="headCtrl.dataSource.notesOnHeader.length > 0">{[{headCtrl.dataSource.notesOnHeader.length}]}</span></a>
+                        <ul class="dropdown-menu">
+                            <li class="external">
+                                <h3><span class="bold">{[{headCtrl.dataSource.notesOnHeader.length}]} pending</span> notifications</h3><a href="#/profile/dashboard">view all</a>
+                            </li>
+                            <li>
+                                <ul style="height: 250px;" data-handle-color="#637283" class="dropdown-menu-list scroller">
+                                    <li ng-repeat="item in headCtrl.dataSource.notesOnHeader">
+                                        <a href="javascript:;">
+                                            <span class="time" ng-bind="item.created_at * 1000 | date:'HH:mm'"></span>
+                                            <span class="details">
+                                                <span class="label label-sm label-icon label-success">
+                                                    <i class="fa fa-plus"></i>
+                                                </span>
+                                                <span ng-bind="item.text"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END NOTIFICATION DROPDOWN-->
+                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte-->
+                    <li class="dropdown dropdown-user">
+                        <a href="#" class="dropdown-toggle">
+                            <img alt="" src="{{ asset('/img/avatar_1.png') }}" class="img-circle"/>
+                            <span class="username username-hide-on-mobile" ng-bind="headCtrl.currentUser.name"></span>
+                        </a>
+                    </li>
+                    <!-- BEGIN QUICK SIDEBAR TOGGLER-->
+                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte-->
+                    <li class="dropdown dropdown-quick-sidebar-toggler"><a ng-click="headCtrl.doLogout()" class="dropdown-toggle"><i class="icon-logout"></i></a></li>
+                    <!-- END QUICK SIDEBAR TOGGLER-->
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU-->
+        </div>
+        <!-- END HEADER INNER-->
+    </div>
+    <!-- END HEADER-->
+    <div class="clearfix"></div>
+    <!-- BEGIN CONTAINER-->
+    <div class="page-container">
+        <!-- BEGIN SIDEBAR-->
+        <div class="page-sidebar-wrapper" kc-sidebar-component>
+            <div class="page-sidebar navbar-collapse collapse">
+                <!-- BEGIN SIDEBAR MENU-->
+                <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders)-->
+                <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode-->
+                <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode-->
+                <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing-->
+                <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded-->
+                <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed-->
+                <ul data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}" class="page-sidebar-menu">
+                    <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element-->
+                    <li class="start nav-item" ng-class="{'active': $state.includes('dashboard')}">
+                        <a ui-sref="dashboard">
+                            <i class="fa fa-dashboard"></i>
+                            <span class="title">Dashboard</span>
+                            <span class="selected"></span>
+                        </a>
+                    </li>
+                    {% if is_granted('ROLE_PATIENT_LIST') %}
+                    <li class="nav-item" ng-class="{'active': $state.includes('patient') || $state.includes('patient_list')}">
+                        <a ui-sref="patient_list">
+                            <i class="fa fa-group"></i>
+                            <span class="title">Patients</span>
+                            <span class="selected"></span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <!--
+                    {% if is_granted('ROLE_GROW_LIST') %}
+                    <li class="nav-item">
+                        <a ui-sref="login">
+                            <i class="fa fa-leaf"></i>
+                            <span class="title">Grow</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_BATCHES_LIST') %}
+                    <li class="nav-item">
+                        <a ui-sref="login">
+                            <i class="fa fa-archive"></i>
+                            <span class="title">Batches</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_BP_LIST') %}
+                    <li class="nav-item">
+                        <a ui-sref="login">
+                            <i class="fa fa-thumbs-up"></i>
+                            <span class="title">Best Practices</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_TASKS_LIST') %}
+                    <li class="nav-item">
+                        <a ui-sref="login">
+                            <i class="fa fa-calendar"></i>
+                            <span class="title">Tasks</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_SALES_ORDERS_LIST') %}
+                    <li class="nav-item">
+                        <a ui-sref="login">
+                            <i class="fa fa-credit-card"></i>
+                            <span class="title">Sales Orders</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_PURCHASE_ORDERS_LIST') %}
+                    <li class="nav-item">
+                        <a ui-sref="login">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="title">Purchase Orders</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    -->
+                    <!--<li class="nav-item"><a ui-sref="login"><span class="title">Inventory</span></a></li>-->
+                    <!--<li class="nav-item"><a ui-sref="login"><span class="title">Reports</span></a></li>-->
+                    {% if is_granted('ROLE_DOCTOR_LIST') %}
+                        <li class="nav-item" ui-sref-active="active">
+                            <a ui-sref="doctors_list">
+                                <i class="fa fa-plus"></i>
+                                <span class="title">Doctors</span>
+                                <span class="selected"></span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_STAFF_LIST') %}
+                    <li class="nav-item"  ng-class="{'active': $state.includes('staff_list') || $state.includes('staff_access_level')}">
+                        <a ui-sref="staff_list">
+                            <i class="fa fa-male"></i>
+                            <span class="title">Staff</span>
+                            <span class="selected"></span>
+
+                        </a>
+                    </li>
+                    {% endif %}
+                    <!--<li class="nav-item"><a ui-sref="login"><span class="title">Recall Summary</span></a></li>-->
+                    <!--<li class="nav-item"><a ui-sref="login"><span class="title">Strain Care</span></a></li>-->
+                </ul>
+                <!-- END SIDEBAR MENU-->
+            </div>
+        </div>
+        <!-- END SIDEBAR-->
+        <!-- BEGIN CONTENT-->
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                <!-- BEGIN ACTUAL CONTENT-->
+
+                    {% block content %}
+
+                    {% endblock content %}
+
+                </div>
+                <!-- END ACTUAL CONTENT-->
+            </div>
+        </div>
+        <!-- END CONTENT-->
+    </div>
+    <!-- END CONTAINER-->
+    <!-- BEGIN FOOTER-->
+    <div class="page-footer" kc-footer-component>
+        <div class="page-footer-inner"> 2016 © KindCann
+            <div class="scroll-to-top"><i class="icon-arrow-up"></i></div>
+        </div>
+    </div>
+    <!-- END FOOTER-->
+
+</div>

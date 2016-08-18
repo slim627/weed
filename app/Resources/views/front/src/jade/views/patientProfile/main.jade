@@ -1,0 +1,111 @@
+// BEGIN PAGE HEADER
+.page-bar
+  ul.page-breadcrumb
+    li
+      a(href='#/dashboard.html') Home
+      i.fa.fa-circle
+    li
+      a(ui-sref='page.patients') Patients
+      i.fa.fa-circle
+    li Profile
+
+
+h3.page-title  Patient profile
+// END PAGE HEADER
+// BEGIN MAIN CONTENT
+div.page-content-container(ng-controller="UserProfileController as patientProfile")
+  .row
+    .col-md-12
+      // BEGIN PROFILE SIDEBAR
+      .profile-sidebar
+        // PORTLET MAIN
+        .portlet.light.profile-sidebar-portlet
+          // END SIDEBAR USERPIC
+          // SIDEBAR USER TITLE
+          .profile-usertitle
+            .profile-usertitle-name  Marcus Doe
+            .profile-usertitle-job P99200399488
+            .btn-group
+              button.btn.btn-success(type='button') Verified
+              button.btn.btn-success.dropdown-toggle(type='button', data-toggle='dropdown', aria-expanded='false')
+                i.fa.fa-angle-down
+              ul.dropdown-menu(role='menu')
+                li
+                  a(href='javascript:;')  Action
+                li
+                  a(href='javascript:;')  Another action
+                li
+                  a(href='javascript:;')  Something else here
+          // END SIDEBAR USER TITLE
+          // SIDEBAR MENU
+          .profile-usermenu
+            ul.nav
+              li(ng-class="{active: $state.includes('page.profile.overview')}")
+                a(ui-sref='page.profile.overview')
+                  |  Overview
+              li(ng-class="{active: $state.includes('page.profile.complaints')}")
+                a(ui-sref='page.profile.complaints')
+                  | Complaints
+              li(ng-class="{active: $state.includes('page.profile.complaints')}")
+                a(ui-sref='page.profile.complaints')
+                  | Notes & Tasks
+              li(ng-class="{active: $state.includes('page.profile.complaints')}")
+                a(ui-sref='page.profile.complaints')
+                  | History
+              li(ng-class="{active: $state.includes('page.profile.complaints')}")
+                a(ui-sref='page.profile.complaints')
+                  | Orders
+              li(ng-class="{active: $state.includes('page.profile.complaints')}")
+                a(ui-sref='page.profile.complaints')
+                  | Prescriptions
+          // END MENU
+        // END PORTLET MAIN
+        // PORTLET MAIN
+        .portlet.light
+          .portlet-title
+            .caption.caption-md
+              span.caption-subject.font-blue-madison.bold.uppercase About Marcus Doe
+            .actions
+              .btn-group.btn-group-devided(data-toggle='buttons')
+                button.btn.default.btn-outline
+                  i.fa.fa-edit
+                  | &nbsp Edit
+          .portlet-body
+            .number-stats.margin-bottom-30
+              table
+                tr
+                  td Health card:
+                  td.pull-right.bold 4873 4895 2341 RX
+                tr
+                  td Expiry:
+                  td.pull-right.bold October 23, 2017
+                tr
+                  td Date of birth:
+                  td.pull-right.bold July 12, 1986
+                tr
+                  td Member expiry:
+                  td.pull-right.bold April 1, 2014
+                tr
+                  td Member expiry:
+                  td.pull-right.bold April 1, 2016
+                tr
+                  td Account manager:
+                  td.pull-right.bold Bob Nilson
+                tr
+                  td Last online visit:
+                  td.pull-right.bold October 17, 2015
+                tr
+                  td Online account:
+                  td.pull-right
+                    .label.label-success Approved
+                tr
+                  td Diagnosis:
+                  td.pull-right.bold Arthritis
+        // END PORTLET MAIN
+      // END BEGIN PROFILE SIDEBAR
+      // BEGIN PROFILE CONTENT
+      .profile-content.fade-in-up(ui-view='' name='profile-view')
+      // END PROFILE CONTENT
+  // END PAGE CONTENT
+
+

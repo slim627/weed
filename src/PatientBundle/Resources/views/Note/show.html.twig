@@ -1,0 +1,110 @@
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-blue uppercase">{{ note.code }} | {% if note.title is not empty %} {{ note.title }} {% endif %}</span>
+        </div>
+        <div class="tools">
+        </div>
+    </div>
+    <div class="portlet-body form">
+
+        <div class="form-body">
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Patient name:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{{ note.patient.name }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Account phone:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if note.accountPhone is not empty %}{{ note.accountPhone }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Complaint ID:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if note.complaint is not empty %} {{ note.complaint.code }} {% endif %}</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Contact phone:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if note.contactPhone %}{{ note.contactPhone }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Action type:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if note.actionType is not empty %}{{ note.actionType }}{% endif %}</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Account status:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if note.accountStatus is not empty %}{{ note.accountStatus }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Start time:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if note.startTime is not empty %}{{ note.startTime | date('M d, Y, h:iA') }}{% endif %}</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Assigned ot:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if note.assignedTo is not empty %}{{ note.assignedTo.name }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">End time:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if note.endTime is not empty %}{{ note.endTime | date('M d, Y, h:iA') }}{% endif %}</span>  <!--May 12, 2015, 03:55PM -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="well">
+                        <h5 class="text-uppercase"><strong>Description:</strong></h5>
+                        <p>
+                            <span>
+                                {% if note.description is not empty %}{{ note.description }}{% endif %}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="well">
+                        <h5 class="text-uppercase"><strong>Note:</strong></h5>
+                        <p>
+                            <span>
+                                {% if note.note is not empty %}{{ note.note }}{% endif %}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

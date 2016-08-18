@@ -1,0 +1,213 @@
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-blue uppercase">{{ complaint.code }} | {{ complaint.title }}</span>
+        </div>
+    </div>
+    <div class="portlet-body form">
+
+        <div class="form-body">
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Patient name:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.patient is not empty %}{{ complaint.patient.name }}{% endif %}</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Product name:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.productName is not empty %}{{ complaint.productName }}{% endif  %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Created date:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{{ complaint.createdAt | date('M d, Y, h:iA') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Lot/batch number:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.lotBatchNumber is not empty %}{{ complaint.lotBatchNumber }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Due date:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.dueDate is not empty %}{{ complaint.dueDate | date('M d, Y, h:iA') }}{% endif %}</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Received by:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.receivedBy is not empty %}{{ complaint.receivedBy }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Queue:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.quantityReceived is not empty %}{{ complaint.quantityReceived }}{% endif %}</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Package size:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.packageSize is not empty %}{{ complaint.packageSize }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Priority:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.priority is not empty %}{{ complaint.priority }}{% endif %}</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Sample available:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.sampleAvailable is not empty %}{{ complaint.sampleAvailable }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Source:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.sourceOfComplaint is not empty %}{{ complaint.sourceOfComplaint }}{% endif %}</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Status:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.status is not empty %}{{ complaint.status }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Assigned to:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.assignedTo is not empty %}{{ complaint.assignedTo }}{% endif %}</span>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-inline">
+                        <label class="control-label col-md-2">Preferred contact:</label>
+                        <div class="col-md-4">
+                            <span class="strong">{% if complaint.preferredContactMethod is not empty %}{{ complaint.preferredContactMethod }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb20">
+                <div class="col-xs-12">
+                    <div class="well">
+                        <h5 class="text-uppercase"><strong>Description:</strong></h5>
+                        <p><span>
+                                {% if complaint.description is not empty %}{{ complaint.description }}{% endif  %}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="well">
+                        <h5 class="text-uppercase"><strong>Note:</strong></h5>
+                        <p><span>
+                                {% if complaint.note is not empty %}{{ complaint.note }}{% endif %}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-blue uppercase">Activity</span>
+        </div>
+        <div class="tools">
+            <div class="form-actions right">
+                {% if is_granted('ROLE_PATIENT_NOTE_AND_TASK_CREATE') %}
+                <button
+                        type="submit"
+                        class="btn blue"
+                        ng-click="modalCtrl.addTask()"
+                        ladda="modalCtrl.inProgress">
+                    <i class="fa fa-check"></i> New task
+                </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="portlet-body form">
+
+        <div class="form-body">
+            <div class="table-scrollable table-scrollable-borderless">
+                <table class="table table-light ng-scope">
+                    <thead>
+                    <tr class="uppercase">
+                        <th>
+                            Assigned to
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th style="min-width: 200px">
+                            Time
+                        </th>
+                        <th>
+                            Notes
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in modalCtrl.tasksList">
+                        <td ng-bind="item.assignedTo.name"></td>
+                        <td ng-bind="item.status"></td>
+                        <td>{[{item.startTime * 1000 | date:'yyyy-MM-dd HH:mm'}]} - {[{item.endTime * 1000 | date:'yyyy-MM-dd HH:mm'}]} </td>
+                        <td ng-bind="item.note"></td>
+                        <td class="text-right">
+                            {% if is_granted('ROLE_PATIENT_NOTE_AND_TASK_EDIT') %}
+                            <button
+                                type="submit"
+                                class="btn btn-default btn-sm font-blue "
+                                ladda="modalCtrl.inProgress"
+                                ng-click="modalCtrl.editTask(item.id)"
+                                >
+                                Edit
+                            </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+

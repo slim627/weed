@@ -1,0 +1,42 @@
+doctor:
+    resource: "@DoctorBundle/Controller/"
+    type:     annotation
+    prefix:   /doctor
+
+api:
+    resource: "@APIBundle/Controller/"
+    type:     annotation
+    prefix:   /api
+
+common:
+    resource: "@CommonBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+dashboard:
+    resource: "@DashboardBundle/Controller/"
+    type:     annotation
+    prefix:   /dashboard
+
+patient:
+    resource: "@PatientBundle/Controller/"
+    type:     annotation
+    prefix:   /patient
+
+staff:
+    resource: "@StaffBundle/Controller/"
+    type:     annotation
+    prefix:   /staff
+
+notification:
+    resource: "@StaffBundle/Controller/NotificationController.php"
+    type:     annotation
+    prefix:   /notification
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    prefix:   /
+
+nelmio_api_doc:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc

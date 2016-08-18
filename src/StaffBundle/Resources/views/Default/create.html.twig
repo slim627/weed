@@ -1,0 +1,77 @@
+{{ form_start(form, {'attr': {'ng-submit': 'modalCtrl.onSubmit("' ~ path('staff.submit') ~'")', 'novalidate': 'novalidate'}}) }}
+
+<div class="portlet light bordered" ng-init="modalCtrl.formName='{{ form.vars.name }}'">
+        <div class="portlet-title">
+                <div class="caption">
+                        <span class="caption-subject font-blue uppercase" ng-if="!modalCtrl.isEdit">New Staff</span>
+                        <span class="caption-subject font-blue uppercase" ng-if="modalCtrl.isEdit">Edit Staff</span>
+                </div>
+        </div>
+        <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form action="#" class="form-horizontal">
+                        <div class="form-body">
+                                <div class="row mb20">
+                                        <div class="col-md-12">
+                                                {{ form_row(form.firstName) }}
+                                                {{ form_row(form.lastName) }}
+                                        </div>
+                                        <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row mb20">
+                                        <div class="col-md-12">
+                                                {{ form_row(form.supervisor) }}
+                                                {{ form_row(form.accessLevel) }}
+                                        </div>
+                                        <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row mb20">
+                                        <div class="col-md-12">
+                                                {{ form_row(form.company) }}
+                                                {{ form_row(form.email) }}
+
+                                        </div>
+                                        <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row mb20">
+                                        <div class="col-md-12">
+                                                {{ form_row(form.username) }}
+                                        </div>
+                                        <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row mb20">
+                                        <div class="col-md-12">
+                                                {{ form_row(form.plainPassword) }}
+                                        </div>
+                                        <!--/span-->
+                                </div>
+                                <!--/row-->
+
+                        </div>
+                        <div class="form-actions right">
+                                <button
+                                        type="button"
+                                        class="btn default"
+                                        ng-click="modalCtrl.closeThisDialog()"
+                                >Cancel</button>
+                                <button
+                                        type="submit"
+                                        class="btn blue"
+                                        ladda="modalCtrl.inProgress"
+                                        ng-disable="{{ form.vars.name }}.$invalid' == true">
+                                        <i class="fa fa-check"></i> Save</button>
+                        </div>
+                        <input type="hidden" name="id" ng-model="modalCtrl.fields.id" ng-init="modalCtrl.fields.id = '{% if id is defined %}{{ id }}{% endif %}'"/>
+
+                </form>
+                <!-- END FORM-->
+        </div>
+</div>
+
+
+
+{{ form_end(form) }}

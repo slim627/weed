@@ -1,0 +1,123 @@
+.row
+  .col-md-12
+    .portlet.light
+      .portlet-title.tabbable-line
+        .caption.caption-md
+          i.icon-globe.theme-font.hide
+          span.caption-subject.font-blue-madison.bold.uppercase Profile Account
+        ul.nav.nav-tabs
+          li.active
+            a(href='#', data-target='#tab_1_1', data-toggle='tab') Personal Info
+          li
+            a(href='#', data-target='#tab_1_2', data-toggle='tab') Change Avatar
+          li
+            a(href='#', data-target='#tab_1_3', data-toggle='tab') Change Password
+          li
+            a(href='#', data-target='#tab_1_4', data-toggle='tab') Privacy Settings
+      .portlet-body
+        .tab-content
+          // PERSONAL INFO TAB
+          #tab_1_1.tab-pane.active
+            form(role='form', action='#')
+              .form-group
+                label.control-label First Name
+                input.form-control(type='text', placeholder='John')
+              .form-group
+                label.control-label Last Name
+                input.form-control(type='text', placeholder='Doe')
+              .form-group
+                label.control-label Mobile Number
+                input.form-control(type='text', placeholder='+1 646 580 DEMO (6284)')
+              .form-group
+                label.control-label Interests
+                input.form-control(type='text', placeholder='Design, Web etc.')
+              .form-group
+                label.control-label Occupation
+                input.form-control(type='text', placeholder='Web Developer')
+              .form-group
+                label.control-label About
+                textarea.form-control(rows='3', placeholder='We are KeenThemes!!!')
+              .form-group
+                label.control-label Website Url
+                input.form-control(type='text', placeholder='http://www.mywebsite.com')
+              .margiv-top-10
+                a.btn.green-haze(href='#')  Save Changes
+                a.btn.default(href='#')  Cancel
+          // END PERSONAL INFO TAB
+          // CHANGE AVATAR TAB
+          #tab_1_2.tab-pane
+            p
+              | Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+            form(action='#', role='form')
+              .form-group
+                .fileinput.fileinput-new(data-provides='fileinput')
+                  .fileinput-new.thumbnail(style='width: 200px; height: 150px;')
+                    img(src='http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image', alt='')
+                  .fileinput-preview.fileinput-exists.thumbnail(style='max-width: 200px; max-height: 150px;')
+                  div
+                    span.btn.default.btn-file
+                      span.fileinput-new  Select image
+                      span.fileinput-exists  Change
+                      input(type='file', name='...')
+                    a.btn.default.fileinput-exists(href='#', data-dismiss='fileinput')  Remove
+                .clearfix.margin-top-10
+                  span.label.label-danger NOTE!
+                  span
+                    | Attached image thumbnail is supported in Latest Firefox, Chrome, Opera, Safari and Internet Explorer 10 only
+              .margin-top-10
+                a.btn.green-haze(href='#')  Submit
+                a.btn.default(href='#')  Cancel
+          // END CHANGE AVATAR TAB
+          // CHANGE PASSWORD TAB
+          #tab_1_3.tab-pane
+            form(action='#')
+              .form-group
+                label.control-label Current Password
+                input.form-control(type='password')
+              .form-group
+                label.control-label New Password
+                input.form-control(type='password')
+              .form-group
+                label.control-label Re-type New Password
+                input.form-control(type='password')
+              .margin-top-10
+                a.btn.green-haze(href='#')  Change Password
+                a.btn.default(href='#')  Cancel
+          // END CHANGE PASSWORD TAB
+          // PRIVACY SETTINGS TAB
+          #tab_1_4.tab-pane
+            form(action='#')
+              table.table.table-light.table-hover
+                tr
+                  td  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus..
+                  td
+                    label.uniform-inline
+                      input(type='radio', name='optionsRadios1', value='option1')
+                      |  Yes
+                    label.uniform-inline
+                      input(type='radio', name='optionsRadios1', value='option2', checked='')
+                      |  No
+                tr
+                  td  Enim eiusmod high life accusamus terry richardson ad squid wolf moon
+                  td
+                    label.uniform-inline
+                      input(type='checkbox', value='')
+                      |  Yes
+                tr
+                  td  Enim eiusmod high life accusamus terry richardson ad squid wolf moon
+                  td
+                    label.uniform-inline
+                      input(type='checkbox', value='')
+                      |  Yes
+                tr
+                  td  Enim eiusmod high life accusamus terry richardson ad squid wolf moon
+                  td
+                    label.uniform-inline
+                      input(type='checkbox', value='')
+                      |  Yes
+              // end profile-settings
+              .margin-top-10
+                a.btn.green-haze(href='#')  Save Changes
+                a.btn.default(href='#')  Cancel
+          // END PRIVACY SETTINGS TAB
+

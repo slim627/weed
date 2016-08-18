@@ -1,0 +1,204 @@
+{{ form_start(form, {'attr': {'ng-submit': 'modalCtrl.onSubmit("' ~ path('patient_submit') ~'")', 'novalidate': 'novalidate'}}) }}
+
+<div class="portlet light bordered" ng-init="modalCtrl.formName='{{ form.vars.name }}'">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-blue uppercase" ng-if="modalCtrl.fields.name.length > 1">Editing {[{modalCtrl.fields.name}]}</span>
+            <span class="caption-subject font-blue uppercase" ng-if="!modalCtrl.fields.name.length">New patient</span>
+        </div>
+        <div class="tools">
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        {#<form action="#" class="form-horizontal">#}
+            <div class="form-body">
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs">
+                        <li ng-class="{'active': modalCtrl.activeTab == 'tab_about'}"><a href="#tab_about" data-toggle="tab" aria-expanded="{[{modalCtrl.activeTab == 'tab_about'}]}">About</a></li>
+                        <li ng-class="{'active': modalCtrl.activeTab == 'tab_contact'}"><a href="#tab_contact" data-toggle="tab" aria-expanded="{[{modalCtrl.activeTab == 'tab_contact'}]}">Contact Information</a></li>
+                        <li ng-class="{'active': modalCtrl.activeTab == 'tab_doctor'}"><a href="#tab_doctor" data-toggle="tab" aria-expanded="{[{modalCtrl.activeTab == 'tab_doctor'}]}">Doctor</a></li>
+                        <li ng-class="{'active': modalCtrl.activeTab == 'tab_upload'}"><a href="#tab_upload" data-toggle="tab" aria-expanded="{[{modalCtrl.activeTab == 'tab_upload'}]}">Upload Files</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab_about" class="tab-pane" ng-class="{'active': modalCtrl.activeTab == 'tab_about'}">
+                            <div class="row mb20">
+                                <div class="col-md-12">
+                                    {{ form_row(form.name) }}
+                                    {{ form_row(form.memberSince) }}
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <!--/row-->
+                            <div class="row mb20">
+                                <div class="col-md-12">
+                                    {{ form_row(form.memberExpire) }}
+                                    {{ form_row(form.healthNumber) }}
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <!--/row-->
+                            <div class="row mb20">
+                                <div class="col-md-12">
+                                    {{ form_row(form.accountManager) }}
+                                    {{ form_row(form.onlineAccount) }}
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <!--/row-->
+                            <!--/row-->
+                            <div class="row mb20">
+                                <div class="col-md-12">
+                                    {{ form_row(form.dateOfBirth) }}
+                                    {{ form_row(form.diagnosis) }}
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <!--/row-->
+                        </div>
+                        <div id="tab_contact" class="tab-pane" ng-class="{'active': modalCtrl.activeTab == 'tab_contact'}">
+                            <div class="row mb20">
+                                <div class="col-md-12">
+                                    {{ form_row(form.phone) }}
+                                    {{ form_row(form.mailingAddress) }}
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <!--/row-->
+
+                            <div class="row mb20">
+                                <div class="col-md-12">
+                                    {{ form_row(form.deliveryAddress) }}
+                                    {{ form_row(form.email) }}
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <!--/row-->
+
+                            <div class="row mb20">
+                                <div class="col-md-12">
+                                    {{ form_row(form.taxExemption) }}
+                                    {{ form_row(form.preferredContactMethod) }}
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <!--/row-->
+
+
+                        </div>
+                        <div id="tab_doctor" class="tab-pane" ng-class="{'active': modalCtrl.activeTab == 'tab_doctor'}">
+
+                            <div class="row mb20">
+                                <div class="col-md-12">
+                                    {{ form_row(form.doctor) }}
+
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <!--/row-->
+
+                        </div>
+
+                        <div id="tab_upload" class="tab-pane" ng-class="{'active': modalCtrl.activeTab == 'tab_upload'}">
+                            <div class="row mb20" >
+                                <div class="col-md-6 col-xs-8">
+                                    {{ form_row(form.files) }}
+                                </div>
+                            </div>
+
+                            <span ng-init="modalCtrl.fields.files = []"></span>
+                            <div class="row mb20" ng-repeat="item in modalCtrl.fields.files" >
+                                <div class="col-md-12">
+                                    <div class="form-group form-group-inline">
+                                        <label class="control-label col-md-8" ng-bind="item.name"></label>
+                                        <div class="col-md-4">
+                                            <div class="actions">
+                                                <div class="controls ng-scope">
+                                                    <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                                        <div class="table-group-actions pull-right">
+                                                            <button
+                                                                    class="btn red btn-sm active ladda-button"
+                                                                    ng-click="modalCtrl.removeFile($index)"
+                                                                    ladda="patientComplaintsCtrl.inProgress"
+                                                                    data-style="slide-left">
+                                                                <span class="ladda-label">
+                                                                     <i class="fa fa-plus"></i> Remove
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                            </div>
+
+
+                            <div class="row mb20" >
+                                <div class="col-md-12">
+                                    <div class="form-group form-group-inline">
+                                        <label class="control-label col-md-2 bold" >Uploaded files:</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <span ng-init="modalCtrl.uploadedFiles = {% if files is defined %} {{ files | json_encode }}{% else %} {{ '[]' }} {% endif %}"></span>
+                            <div class="row mb20" ng-repeat="item in modalCtrl.uploadedFiles" >
+                                <div class="col-md-12">
+                                    <div class="form-group form-group-inline">
+                                        <label class="control-label col-md-7">{[{item.title}]}, {[{item.size | kcFileSize}]}</label>
+                                        <div class="col-md-4">
+                                            <div class="actions">
+                                                <div class="controls ng-scope">
+                                                    <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                                        <div class="table-group-actions pull-right">
+                                                            <button
+                                                                class="btn red btn-sm active ladda-button"
+                                                                ng-click="modalCtrl.removeUploadedFile($index)"
+                                                                ladda="modalCtrl.removeBtn_{[{$index}]}_progress"
+                                                                data-style="slide-left">
+                                                                <span class="ladda-label">
+                                                                     <i class="fa fa-plus"></i> Remove
+                                                                </span>
+                                                            </button>
+                                                            <button
+                                                                    ng-if="item.url !== undefined"
+                                                                    class="btn btn-default btn-sm"
+                                                                    ng-click="modalCtrl.openFile(item.url)">
+                                                                <i class="fa fa-print"></i> View
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <!--/row-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions right">
+                <button
+                        type="button"
+                        class="btn default"
+                        ng-click="modalCtrl.closeThisDialog()"
+                >Cancel</button>
+                <button
+                        type="submit"
+                        class="btn blue"
+                        ladda="modalCtrl.inProgress">
+                    <i class="fa fa-check"></i> Save</button>
+            </div>
+            <input type="hidden" name="id" ng-model="modalCtrl.fields.id" ng-init="modalCtrl.fields.id = '{% if patientId is defined %}{{ patientId }}{% endif %}'"/>
+        {#</form>#}
+        <!-- END FORM-->
+    </div>
+</div>
+
+{{ form_end(form) }}
+

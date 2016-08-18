@@ -1,0 +1,81 @@
+// BEGIN PAGE HEADER
+.page-bar
+  ul.page-breadcrumb
+    li
+      a(href='#/dashboard.html') Home
+      i.fa.fa-circle
+    li
+      a(href='#') Patients
+
+h3.page-title  Patients
+// END PAGE HEADER
+// BEGIN MAIN CONTENT
+div.page-content-container(ng-controller="PatientsController as patients")
+  .row
+    .col-md-12
+      // BEGIN BORDERED TABLE PORTLET
+      .portlet.light.portlet-fit.bordered
+        .portlet-title
+          .row
+            .col-md-2.col-sm-12
+              #datatable_ajax_length.dataTables_length
+                label
+                  | Show
+                  select.form-control.input-xs.input-sm.input-inline(name='datatable_ajax_length', aria-controls='datatable_ajax')
+                    option(value='10') 10
+                    option(value='20') 20
+                    option(value='50') 50
+                    option(value='100') 100
+                    option(value='150') 150
+                    option(value='-1') All
+            .col-md-6.col-sm-12
+              #sample_1_filter.dataTables_filter
+                label
+                  | Search:
+                  input.form-control.input-sm.input-small.input-inline(type='search', placeholder='', aria-controls='sample_1')
+
+            .col-md-4.col-sm-12
+              .table-group-actions.pull-right
+                button.btn.btn-info.btn-sm.active
+                  i.fa.fa-user
+                  |  Add new patient
+
+
+        .portlet-body
+          .table-scrollable.table-scrollable-borderless
+            table.table.table-hover.table-light
+              thead
+                tr.uppercase
+                  th  Patient
+                  th  Id number
+                  th  Presc expiry
+                  th  30 day limit
+                  th  Daily limit
+                  th  Cycle start
+                  th  Cycle end
+                  th  Grams Left
+                  th  Last order
+                  th  Phone
+                  th  Doctor
+                  th  Health N
+                  th  Verified
+              tbody
+                tr(ng-repeat="item in patients.patientsData.patients track by $index" ng-click='patients.openPatient(item)')
+                  td(ng-bind="item.name")
+                  td(ng-bind="item._id")
+                  td(ng-bind="item.prescExpiry")
+                  td(ng-bind="item.thirtyDayLimit")
+                  td(ng-bind="item.daylyLimit")
+                  td(ng-bind="item.cycleStart")
+                  td(ng-bind="item.cycleEnd")
+                  td(ng-bind="item.gramsLeft")
+                  td(ng-bind="item.lastOrder")
+                  td(ng-bind="item.phone")
+                  td(ng-bind="item.doctor")
+                  td(ng-bind="item.heanltN")
+                  td(ng-bind="item.verified")
+
+      // END BORDERED TABLE PORTLET
+
+
+// END MAIN CONTENT

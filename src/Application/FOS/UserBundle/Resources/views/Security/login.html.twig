@@ -1,0 +1,57 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <!-- BEGIN CONTENT-->
+    <div ng-controller="LoginController as login" class="login">
+        <!-- BEGIN LOGO-->
+        <div class="logo"><a href="{{ path('base_layout') }}"><img src="{{ asset('/img/logo.png') }}" alt=""/></a></div>
+        <!-- END LOGO-->
+        <!-- BEGIN LOGIN-->
+        <div class="content">
+            {% if error %}
+                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            <!-- BEGIN LOGIN FORM-->
+            <form ng-submit="login.doLogin('{{ path("fos_user_security_check") }}')" ng-enter="login.doLogin('{{ path("fos_user_security_check") }}')" class="login-form" ng-show="login.isLoginFormActive">
+                <h3 class="form-title font-green">Sign In</h3>
+                <div class="alert alert-danger display-hide">
+                    <button data-close="alert" class="close"></button><span>Enter any username and password.</span>
+                </div>
+                <div class="form-group">
+                    <!-- ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                    <label class="control-label visible-ie8 visible-ie9">{{ 'security.login.username'|trans }}</label>
+                    <input type="text" autocomplete="off" placeholder="{{ 'security.login.username'|trans }}" id="username" name="_username" ng-model="login.formData.username" class="form-control form-control-solid placeholder-no-fix"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">{{ 'security.login.password'|trans }}</label>
+                    <input type="password" autocomplete="off" placeholder="{{ 'security.login.password'|trans }}" id="password" name="_password" ng-model="login.formData.password" class="form-control form-control-solid placeholder-no-fix"/>
+                </div>
+                <div class="form-actions">
+                    <button  class="btn green uppercase" ladda="login.authorization.inProgress">{{ 'security.login.submit'|trans }}</button>
+                    {#<a id="forget-password" href="javascript:;" ng-click="login.isLoginFormActive = !login.isLoginFormActive" class="forget-password">Forgot Password?</a>#}
+                </div>
+                <input type="hidden" name="_csrf_token" ng-model="login.formData.csrfToken" ng-init="login.formData.csrfToken = '{{ csrf_token }}'" />
+            </form>
+            <!-- END LOGIN FORM-->
+
+            <!-- BEGIN FORGOT PASSWORD FORM-->
+            <form ng-submit="login.resetPassword('{{ path('fos_user_resetting_send_email') }}')" ng-show="!login.isLoginFormActive">
+                <h3 class="font-green">Forget Password ?</h3>
+                <p> Enter your e-mail address below to reset your password.</p>
+                {% if invalid_username is defined %}
+                    <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+                {% endif %}
+                <div class="form-group">
+                    <input type="text" autocomplete="off" placeholder="{{ 'resetting.request.username'|trans }}" ng-model="login.formData.usernameOrEmail" id="usernameOrEmail" name="_usernameOrEmail" class="form-control placeholder-no-fix"/>
+                </div>
+                <div class="form-actions">
+                    <button id="back-btn" type="button" class="btn btn-default" ng-click="login.isLoginFormActive = !login.isLoginFormActive" >Back</button>
+                    <button type="submit" class="btn btn-success uppercase pull-right" ladda="login.authorization.inProgress" value="{{ 'resetting.request.submit'|trans }}">{{ 'resetting.request.submit'|trans }}</button>
+                </div>
+            </form>
+            <!-- END FORGOT PASSWORD FORM-->
+        </div>
+        <div class="copyright"> 2016 © KindCann</div>
+    </div>
+    <!-- END CONTENT-->
+{% endblock fos_user_content %}

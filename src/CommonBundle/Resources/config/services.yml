@@ -1,0 +1,27 @@
+services:
+    annotations.event_listener.ajaxonlyrequest:
+        class: CommonBundle\EventListener\AjaxRequestListener
+        tags: [{name: kernel.event_listener, event: kernel.controller, method: onKernelController}]
+        arguments: [@annotation_reader]
+
+    kernel.event_listener.json_request_transformer:
+        class: Qandidate\Common\Symfony\HttpKernel\EventListener\JsonRequestTransformerListener
+        tags:
+          - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 100 }
+
+    kx.grid_builder:
+        class: CommonBundle\Grid\GridBuilder
+        calls:
+            - [setContainer, [@service_container]]
+
+    kx.grid_printer:
+        class: CommonBundle\Grid\Printer\Printer
+        arguments: [@kx.grid_builder]
+        calls:
+            - [setContainer, [@service_container]]
+
+    kx.twig_extension:
+        class: CommonBundle\Twig\FormExtension
+        public: false
+        tags:
+            - { name: twig.extension }
